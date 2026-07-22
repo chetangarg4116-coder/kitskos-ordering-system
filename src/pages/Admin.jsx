@@ -6,26 +6,33 @@ import {
   doc,
   updateDoc
 } from "firebase/firestore";
+
 import app from "../firebase/config";
 import "../styles/admin.css";
+
 
 function Admin() {
 
   const db = getFirestore(app);
 
- const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
 
-const today = new Date().toLocaleDateString("en-IN");
+  // Fixed date format
+  const today = new Date();
 
-const [selectedDate, setSelectedDate] = useState(today);
+  const todayFormatted =
+    `${String(today.getDate()).padStart(2,"0")}/${String(today.getMonth()+1).padStart(2,"0")}/${today.getFullYear()}`;
 
-const [statusFilter, setStatusFilter] = useState("All");
-const [tableSearch, setTableSearch] = useState("");
+  const [selectedDate, setSelectedDate] = useState(todayFormatted);
+
+  const [statusFilter, setStatusFilter] = useState("All");
+
+  const [tableSearch, setTableSearch] = useState("");
+
 
   useEffect(() => {
 
     const unsubscribe = onSnapshot(
-
       collection(db, "orders"),
 
       (snapshot) => {
@@ -35,426 +42,625 @@ const [tableSearch, setTableSearch] = useState("");
           ...doc.data()
         }));
 
-        data.sort((a, b) => {
 
-          if (!a.createdAt || !b.createdAt) return 0;
+        data.sort((a,b)=>{
+
+          if(!a.createdAt || !b.createdAt)
+            return 0;
 
           return b.createdAt.seconds - a.createdAt.seconds;
 
         });
 
+
         setOrders(data);
 
       }
-
     );
+
 
     return () => unsubscribe();
 
+
   }, []);
 
-  const updateStatus = async (id, status) => {
+
+
+  // Update order status
+
+  const updateStatus = async(id,status)=>{
 
     await updateDoc(
-      doc(db, "orders", id),
+      doc(db,"orders",id),
       {
         status
       }
     );
 
   };
-const formatDate = (date) => {
 
-  const d = new Date(date);
 
-  const day = String(d.getDate()).padStart(2,"0");
-  const month = String(d.getMonth()+1).padStart(2,"0");
-  const year = d.getFullYear();
 
-  return `${day}/${month}/${year}`;
+  // Convert date
 
-};
-const filteredOrders = useMemo(() => {
+  const formatDate = (date)=>{
 
-  return orders.filter((order) => {
+    const d = new Date(date);
 
-    let orderDate = "";
+    const day = String(d.getDate()).padStart(2,"0");
 
-    if (order.createdAt) {
+    const month = String(d.getMonth()+1).padStart(2,"0");
 
-      orderDate = new Date(
-        order.createdAt.seconds * 1000
-      ).toLocaleDateString("en-IN");
+    const year = d.getFullYear();
 
-    }
 
-    const matchDate =
-      orderDate === selectedDate;
+    return `${day}/${month}/${year}`;
 
-    const matchStatus =
-      statusFilter === "All" ||
-      order.status === statusFilter;
+  };
 
-    const matchTable =
-      tableSearch === "" ||
-      String(order.tableNumber).includes(tableSearch);
 
-    return matchDate && matchStatus && matchTable;
 
-  });
+  const filteredOrders = useMemo(()=>{
 
-}, [orders, selectedDate, statusFilter, tableSearch]);
-const totalRevenue = useMemo(() => {
 
-  return filteredOrders.reduce(
-    (sum, order) => sum + (order.totalAmount || 0),
-    0
+    return orders.filter((order)=>{
+
+
+let orderDate = "";
+
+if(order.createdAt){
+
+  const date = new Date(
+    order.createdAt.seconds * 1000
   );
 
-}, [filteredOrders]);
+  const day = String(date.getDate()).padStart(2,"0");
+  const month = String(date.getMonth()+1).padStart(2,"0");
+  const year = date.getFullYear();
 
- const pending = filteredOrders.filter(
-    order => order.status === "Pending"
+  orderDate = `${day}/${month}/${year}`;
+
+}
+
+
+const matchDate = orderDate === selectedDate;
+console.log(
+  "Order Date:",
+  orderDate,
+  "Selected Date:",
+  selectedDate
+);
+
+
+
+      const matchStatus =
+      statusFilter==="All" ||
+      order.status===statusFilter;
+
+
+
+      const matchTable =
+      tableSearch==="" ||
+      String(order.tableNumber)
+      .includes(tableSearch);
+
+
+
+return matchDate &&
+       matchStatus &&
+       matchTable;
+
+    });
+
+
+  },[
+    orders,
+    selectedDate,
+    statusFilter,
+    tableSearch
+  ]);
+
+
+
+  const totalRevenue = useMemo(()=>{
+
+    return filteredOrders.reduce(
+      (sum,order)=>
+      sum+(order.totalAmount || 0),
+      0
+    );
+
+  },[filteredOrders]);
+
+
+
+  const pending =
+  filteredOrders.filter(
+    order=>order.status==="Pending"
   ).length;
 
- const preparing = filteredOrders.filter(
-    order => order.status === "Preparing"
+
+
+  const preparing =
+  filteredOrders.filter(
+    order=>order.status==="Preparing"
   ).length;
 
-const ready = filteredOrders.filter(
-    order => order.status === "Ready"
+
+
+  const ready =
+  filteredOrders.filter(
+    order=>order.status==="Ready"
   ).length;
 
-  return (
+
+
+  const cancelled =
+  filteredOrders.filter(
+    order=>order.status==="Cancelled"
+  ).length;
+    return (
 
     <div className="admin-container">
 
+
       <h1 className="dashboard-title">
-
         👨‍🍳 Kitskos Kitchen Dashboard
-
       </h1>
+
+
 
       <div className="summary">
 
-        <div className="summary-card">
 
+        <div className="summary-card">
           <h2>{filteredOrders.length}</h2>
-
           <p>Total Orders</p>
-
         </div>
 
-        <div className="summary-card">
 
+
+        <div className="summary-card">
           <h2>₹{totalRevenue}</h2>
-
           <p>Total Revenue</p>
-
         </div>
 
-        <div className="summary-card">
 
+
+        <div className="summary-card">
           <h2>{pending}</h2>
-
           <p>Pending</p>
-
         </div>
 
-        <div className="summary-card">
 
+
+        <div className="summary-card">
           <h2>{preparing}</h2>
-
           <p>Preparing</p>
-
         </div>
+
+
 
         <div className="summary-card">
-
           <h2>{ready}</h2>
-
           <p>Ready</p>
-
         </div>
+
+
+
+        <div className="summary-card">
+          <h2>{cancelled}</h2>
+          <p>Cancelled</p>
+        </div>
+
 
       </div>
 
+
+
+
+
       <div
-style={{
-display:"flex",
-gap:"20px",
-flexWrap:"wrap",
-margin:"25px 0"
-}}
->
-
-<div>
-
-<label>
-<strong>Date</strong>
-</label>
-
-<br/>
-
-<input
-type="date"
-value={
- selectedDate
- ? selectedDate.split("/").reverse().join("-")
- : ""
-}
-onChange={(e)=>{
-
-setSelectedDate(formatDate(e.target.value));
-
-}}
-/>
-
-</div>
+      style={{
+        display:"flex",
+        gap:"20px",
+        flexWrap:"wrap",
+        margin:"25px 0"
+      }}
+      >
 
 
-<div>
 
-<label>
-<strong>Status</strong>
-</label>
+      <div>
 
-<br/>
+      <label>
+      <strong>Date</strong>
+      </label>
 
-<select
-value={statusFilter}
-onChange={(e)=>setStatusFilter(e.target.value)}
->
-
-<option>All</option>
-<option>Pending</option>
-<option>Preparing</option>
-<option>Ready</option>
-<option>Completed</option>
-
-</select>
-
-</div>
+      <br/>
 
 
-<div>
+      <input
 
-<label>
-<strong>Table Search</strong>
-</label>
+      type="date"
 
-<br/>
+      value={
+        selectedDate
+        .split("/")
+        .reverse()
+        .join("-")
+      }
 
-<input
-placeholder="Table number"
-value={tableSearch}
-onChange={(e)=>setTableSearch(e.target.value)}
-/>
 
-</div>
+      onChange={(e)=>{
 
-</div>
+        setSelectedDate(
+          formatDate(e.target.value)
+        );
+
+      }}
+
+      />
+
+      </div>
+
+
+
+
+
+      <div>
+
+      <label>
+      <strong>Status</strong>
+      </label>
+
+      <br/>
+
+
+      <select
+
+      value={statusFilter}
+
+      onChange={(e)=>
+      setStatusFilter(e.target.value)
+      }
+
+      >
+
+      <option>All</option>
+      <option>Pending</option>
+      <option>Preparing</option>
+      <option>Ready</option>
+      <option>Completed</option>
+      <option>Cancelled</option>
+
+      </select>
+
+      </div>
+
+
+
+
+
+      <div>
+
+      <label>
+      <strong>Table Search</strong>
+      </label>
+
+      <br/>
+
+
+      <input
+
+      placeholder="Table number"
+
+      value={tableSearch}
+
+      onChange={(e)=>
+      setTableSearch(e.target.value)
+      }
+
+      />
+
+
+      </div>
+
+
+      </div>
+
+
+
+
+
+
+
       {
-        filteredOrders.length === 0 ?
+      filteredOrders.length===0
 
-        (
+      ?
 
-          <div className="order-card">
+      <div className="order-card">
 
-            <h2>No Orders Yet</h2>
+      <h2>No Orders Yet</h2>
 
-          </div>
+      </div>
 
-        )
 
-        :
+      :
 
-        (
 
-          <div className="orders-grid">
+      <div className="orders-grid">
 
-            {filteredOrders.map((order) => (
 
-              <div
-                className="order-card"
-                key={order.id}
-              >
+      {
+      filteredOrders.map((order)=>(
 
-                <h2>
 
-                  🍽 Table {order.tableNumber}
+      <div
+      className="order-card"
+      key={order.id}
+      >
 
-                </h2>
 
-                <p>
 
-                  <strong>Customer :</strong>{" "}
+      <h2>
+      🍽 Table {order.tableNumber}
+      </h2>
 
-                  {order.customerName}
 
-                </p>
 
-                <p>
+      <p>
+      <strong>Customer :</strong>{" "}
+      {order.customerName}
+      </p>
 
-                  <strong>Mobile :</strong>{" "}
 
-                  {order.mobileNumber}
 
-                </p>
-                <p>
-<strong>Date :</strong>{" "}
-{
-order.createdAt &&
-new Date(order.createdAt.seconds * 1000)
-.toLocaleDateString("en-IN")
-}
-</p>
+      <p>
+      <strong>Mobile :</strong>{" "}
+      {order.mobileNumber}
+      </p>
 
-<p>
-  <strong>Time :</strong> {order.orderTime}
-</p>
 
-                <hr />
 
-                <h3>Ordered Items</h3>
 
-                {order.items.map((item, index) => (
+      <p>
+      <strong>Date :</strong>{" "}
+      {
+      order.createdAt &&
+      new Date(
+      order.createdAt.seconds*1000
+      )
+      .toLocaleDateString("en-IN")
+      }
+      </p>
 
-                  <div
-                    key={index}
-                    style={{ marginBottom: "15px" }}
-                  >
 
-                    <strong>
 
-                      {item.quantity} × {item.name}
+      <p>
+      <strong>Time :</strong>{" "}
+      {order.orderTime}
+      </p>
 
-                    </strong>
 
-                    {item.variant && (
 
-                      <p>
+      <hr/>
 
-                        Size : {item.variant.name}
 
-                      </p>
 
-                    )}
 
-                    {item.addons &&
-                      item.addons.length > 0 && (
+      <h3>Ordered Items</h3>
 
-                        <div>
 
-                          <strong>Extras</strong>
 
-                          <ul>
+      {
+      order.items.map((item,index)=>(
 
-                            {item.addons.map((addon, i) => (
 
-                              <li key={i}>
+      <div
+      key={index}
+      style={{marginBottom:"15px"}}
+      >
 
-                                {addon.name}
 
-                              </li>
 
-                            ))}
+      <strong>
+      {item.quantity} × {item.name}
+      </strong>
 
-                          </ul>
 
-                        </div>
 
-                    )}                    {item.instruction && (
+      {
+      item.variant &&
 
-                      <p>
+      <p>
+      Size : {item.variant.name}
+      </p>
+      }
 
-                        📝 {item.instruction}
 
-                      </p>
 
-                    )}
+      {
+      item.addons &&
+      item.addons.length>0 &&
 
-                  </div>
 
-                ))}
+      <div>
 
-                <hr />
+      <strong>Extras</strong>
 
-                <h2>
+      <ul>
 
-                  ₹{order.totalAmount}
+      {
+      item.addons.map((addon,i)=>(
 
-                </h2>
+      <li key={i}>
+      {addon.name}
+      </li>
 
-                <h3>
+      ))
+      }
 
-                  Status :
+      </ul>
 
-                  <span
-                    className={`status ${order.status.toLowerCase()}`}
-                    style={{ marginLeft: "10px" }}
-                  >
-
-                    {order.status}
-
-                  </span>
-
-                </h3>
-
-                <div className="btn-row">
-
-                  <button
-                    className="add-btn"
-                    onClick={() =>
-                      updateStatus(order.id, "Pending")
-                    }
-                  >
-                    Pending
-                  </button>
-
-                  <button
-                    className="add-btn"
-                    onClick={() =>
-                      updateStatus(order.id, "Preparing")
-                    }
-                  >
-                    Preparing
-                  </button>
-
-                  <button
-                    className="add-btn"
-                    onClick={() =>
-                      updateStatus(order.id, "Ready")
-                    }
-                  >
-                    Ready
-                  </button>
-
-                  <button
-                    className="add-btn"
-                    onClick={() =>
-                      updateStatus(order.id, "Completed")
-                    }
-                  >
-                    Completed
-                  </button>
-
-                </div>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        )
+      </div>
 
       }
+
+
+
+      {
+      item.instruction &&
+
+      <p>
+      📝 {item.instruction}
+      </p>
+
+      }
+
+
+
+      </div>
+
+
+      ))
+      }
+
+
+
+
+      <hr/>
+
+
+
+      <h2>
+      ₹{order.totalAmount}
+      </h2>
+
+
+
+      <h3>
+
+      Status :
+
+      <span
+      className={`status ${order.status.toLowerCase()}`}
+      style={{marginLeft:"10px"}}
+      >
+
+      {order.status}
+
+      </span>
+
+      </h3>
+
+
+
+
+
+
+      <div className="btn-row">
+
+
+
+      <button
+      className="add-btn"
+      onClick={()=>
+      updateStatus(order.id,"Pending")
+      }
+      >
+      Pending
+      </button>
+
+
+
+
+
+      <button
+      className="add-btn"
+      onClick={()=>
+      updateStatus(order.id,"Preparing")
+      }
+      >
+      Preparing
+      </button>
+
+
+
+
+
+      <button
+      className="add-btn"
+      onClick={()=>
+      updateStatus(order.id,"Ready")
+      }
+      >
+      Ready
+      </button>
+
+
+
+
+
+      <button
+      className="add-btn"
+      onClick={()=>
+      updateStatus(order.id,"Completed")
+      }
+      >
+      Completed
+      </button>
+
+
+
+
+
+      <button
+
+      className="add-btn"
+
+      style={{
+        background:"red"
+      }}
+
+      onClick={()=>
+      updateStatus(order.id,"Cancelled")
+      }
+
+      >
+
+      Cancel Order
+
+      </button>
+
+
+
+
+      </div>
+
+
+
+      </div>
+
+
+      ))
+
+      }
+
+
+      </div>
+
+
+      }
+
+
 
     </div>
 
   );
 
 }
+
 
 export default Admin;
