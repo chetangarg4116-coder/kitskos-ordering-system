@@ -1,9 +1,12 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import OrderForm from "../components/OrderForm";
-import "../styles/menu.css";
+import "../styles/cart.css";
 
 function Cart() {
+
+  const navigate = useNavigate();
 
   const {
     cart,
@@ -16,162 +19,178 @@ function Cart() {
     0
   );
 
+  const totalItems = cart.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
+
   return (
 
-    <div className="menu-container">
+    <div className="cart-container">
 
-      <h1>Your Cart 🛒</h1>
+      <h1 className="cart-title">
+        🛒 Your Cart
+      </h1>
+
+      <button
+        className="checkout-btn"
+        style={{marginBottom:"20px"}}
+        onClick={() => navigate("/menu")}
+      >
+        ← Continue Shopping
+      </button>
 
       {cart.length === 0 ? (
 
-        <div className="menu-card">
+        <div className="empty-cart">
 
-          <h3>Cart is Empty</h3>
+          <h2>Your cart is empty</h2>
 
-          <p>Please add some items.</p>
+          <p>Add some delicious food first.</p>
 
         </div>
 
       ) : (
 
-        cart.map((item) => (
+        <>
 
-          <div
-            className="menu-card"
-            key={item.itemKey}
-          >
+          {cart.map((item) => (
 
-            <h3>{item.name}</h3>
+            <div
+              className="cart-item"
+              key={item.itemKey}
+            >
 
-            {item.variant && (
+              <div className="cart-item-top">
 
-              <p>
+                <h3>{item.name}</h3>
 
-                <strong>Size:</strong>
-
-                {" "}
-
-                {item.variant.name}
-
-              </p>
-
-            )}
-
-            {item.addons && item.addons.length > 0 && (
-
-              <div>
-
-                <strong>Extras</strong>
-
-                <ul>
-
-                  {item.addons.map((addon, index) => (
-
-                    <li key={index}>
-
-                      {addon.name}
-
-                      {" (+₹"}
-
-                      {addon.price}
-
-                      {")"}
-
-                    </li>
-
-                  ))}
-
-                </ul>
+                <div className="item-price">
+                  ₹{item.price}
+                </div>
 
               </div>
 
-            )}
+              {item.variant && (
 
-            {item.instruction && (
+                <p className="variant">
 
-              <p>
+                  <strong>Size :</strong>{" "}
 
-                <strong>Note:</strong>
+                  {item.variant.name}
 
-                {" "}
+                </p>
 
-                {item.instruction}
+              )}
 
-              </p>
+              {item.addons && item.addons.length > 0 && (
 
-            )}
+                <div className="addons">
 
-            <p>
+                  <strong>Extras</strong>
 
-              Price: ₹{item.price}
+                  <ul>
 
-            </p>
+                    {item.addons.map((addon,index)=>(
 
-            <button
+                      <li key={index}>
 
-              className="add-btn"
+                        {addon.name}
 
-              onClick={() =>
-                decreaseQuantity(item.itemKey)
-              }
+                        {" (+₹"}
 
-            >
+                        {addon.price}
 
-              -
+                        {")"}
 
-            </button>
+                      </li>
 
-            <span>
+                    ))}
 
-              {" "}
+                  </ul>
 
-              {item.quantity}
+                </div>
 
-              {" "}
+              )}
 
-            </span>
+              {item.instruction && (
 
-            <button
+                <p className="note">
 
-              className="add-btn"
+                  <strong>Note :</strong>{" "}
 
-              onClick={() =>
-                increaseQuantity(item.itemKey)
-              }
+                  {item.instruction}
 
-            >
+                </p>
 
-              +
+              )}
 
-            </button>
+              <div className="qty-row">
 
-            <p>
+                <div className="qty-box">
 
-              Item Total:
+                  <button
+                    className="qty-btn"
+                    onClick={() =>
+                      decreaseQuantity(item.itemKey)
+                    }
+                  >
+                    -
+                  </button>
 
-              {" ₹"}
+                  <span className="qty-number">
 
-              {item.price * item.quantity}
+                    {item.quantity}
 
-            </p>
+                  </span>
+
+                  <button
+                    className="qty-btn"
+                    onClick={() =>
+                      increaseQuantity(item.itemKey)
+                    }
+                  >
+                    +
+                  </button>
+
+                </div>
+
+                <div className="item-total">
+
+                  ₹{item.price * item.quantity}
+
+                </div>
+
+              </div>
+
+            </div>
+
+          ))}
+                    <div className="total-card">
+
+            <div className="total-row">
+
+              <span>Total Items</span>
+
+              <span>{totalItems}</span>
+
+            </div>
+
+            <div className="grand-total">
+
+              <span>Grand Total</span>
+
+              <span>₹{total}</span>
+
+            </div>
 
           </div>
 
-        ))
+          <OrderForm />
+
+        </>
 
       )}
-
-      <div className="menu-card">
-
-        <h2>
-
-          Total Amount: ₹{total}
-
-        </h2>
-
-      </div>
-
-      <OrderForm />
 
     </div>
 

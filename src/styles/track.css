@@ -1,0 +1,65 @@
+.track-container{
+    width:92%;
+    max-width:700px;
+    margin:30px auto;
+}
+
+.track-card{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
+
+.track-header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.track-status{
+    text-align:center;
+    margin:25px 0;
+}
+
+.status-pill{
+    display:inline-block;
+    padding:10px 22px;
+    border-radius:30px;
+    color:#fff;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.Pending{background:#ff9800;}
+.Preparing{background:#2196f3;}
+.Ready{background:#4caf50;}
+.Completed{background:#555;}
+
+.order-items{
+    margin-top:20px;
+}
+
+.order-item{
+    border-bottom:1px solid #eee;
+    padding:12px 0;
+}
+
+.total-box{
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    background:#f8f8f8;
+    display:flex;
+    justify-content:space-between;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.time-box{
+    margin-top:20px;
+    padding:15px;
+    background:#fff8e1;
+    border-radius:12px;
+    text-align:center;
+    font-weight:bold;
+}

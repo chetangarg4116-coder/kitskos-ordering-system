@@ -6,7 +6,7 @@ import {
   onSnapshot
 } from "firebase/firestore";
 import app from "../firebase/config";
-import "../styles/menu.css";
+import "../styles/track.css";
 
 function TrackOrder() {
 
@@ -48,9 +48,17 @@ function TrackOrder() {
 
     return (
 
-      <div className="menu-container">
+      <div className="track-container">
 
-        <h2>Loading Order...</h2>
+        <div className="track-card">
+
+          <h2 style={{textAlign:"center"}}>
+
+            Loading Order...
+
+          </h2>
+
+        </div>
 
       </div>
 
@@ -83,13 +91,23 @@ function TrackOrder() {
 
   return (
 
-    <div className="menu-container">
+    <div className="track-container">
 
-      <div className="menu-card">
+      <div className="track-card">
 
-        <h1>🍔 Kitskos</h1>
+        <div className="track-header">
 
-        <h2>Order Tracking</h2>
+          <h1>🍔 Kitskos</h1>
+
+          <h2>Order Tracking</h2>
+
+          <p>
+
+            Thank you for ordering with us ❤️
+
+          </p>
+
+        </div>
 
         <hr />
 
@@ -116,108 +134,159 @@ function TrackOrder() {
           {order.customerName}
 
         </p>
+        <p>
+  <strong>Date :</strong> {order.orderDate}
+</p>
+
+<p>
+  <strong>Time :</strong> {order.orderTime}
+</p>
 
         <hr />
 
-        <h3>Your Order</h3>
+        <div className="order-items">
 
-        {
+          <h3>Your Order</h3>
 
-          order.items.map((item, index) => (
+          {
 
-            <div
-              key={index}
-              style={{ marginBottom: "20px" }}
-            >
+            order.items.map((item,index)=>(
 
-              <strong>
+              <div
 
-                {item.quantity} × {item.name}
+                key={index}
 
-              </strong>
+                className="order-item"
 
-              {
+              >
 
-                item.variant && (
+                <strong>
 
-                  <p>
+                  {item.quantity} × {item.name}
 
-                    Size : {item.variant.name}
+                </strong>
 
-                  </p>
+                {
 
-                )
+                  item.variant && (
 
-              }
+                    <p>
 
-              {
+                      Size : {item.variant.name}
 
-                item.addons &&
-                item.addons.length > 0 && (
+                    </p>
 
-                  <ul>
+                  )
 
-                    {
+                }
 
-                      item.addons.map((addon, i) => (
+                {
 
-                        <li key={i}>
+                  item.addons &&
 
-                          {addon.name}
+                  item.addons.length>0 && (
 
-                        </li>
+                    <ul>
 
-                      ))
+                      {
 
-                    }
+                        item.addons.map((addon,i)=>(
 
-                  </ul>
+                          <li key={i}>
 
-                )
+                            {addon.name}
 
-              }
+                          </li>
 
-              {
+                        ))
 
-                item.instruction && (
+                      }
 
-                  <p>
+                    </ul>
 
-                    📝 {item.instruction}
+                  )
 
-                  </p>
+                }
 
-                )
+                {
 
-              }
+                  item.instruction && (
 
-            </div>
+                    <p>
 
-          ))
+                      📝 {item.instruction}
 
-        }
+                    </p>
 
-        <hr />
+                  )
 
-        <h2>
+                }
 
-          Total : ₹{order.totalAmount}
+              </div>
 
-        </h2>
+            ))
 
-        <h2>
+          }
 
-          {getStatusEmoji()} {order.status}
+        </div>
 
-        </h2>
+        <div className="total-box">
 
-        <hr />
+          <span>Total</span>
+
+          <span>
+
+            ₹{order.totalAmount}
+
+          </span>
+
+        </div>
+
+        <div className="track-status">
+
+          <h2>
+
+            Current Status
+
+          </h2>
+
+          <div
+
+            className={`status-pill ${order.status}`}
+
+          >
+
+            {getStatusEmoji()} {order.status}
+
+          </div>
+
+        </div>
+
+        <div className="time-box">
+
+          ⏱ Estimated Preparation Time
+
+          <br /><br />
+
+          <strong>
+
+            15–20 Minutes
+
+          </strong>
+
+        </div>
+
+        <br />
 
         <Link to="/menu">
 
-          <button className="add-btn">
+          <button
 
-            Order Again
+            className="checkout-btn"
+
+          >
+
+            🍽 Order Again
 
           </button>
 
