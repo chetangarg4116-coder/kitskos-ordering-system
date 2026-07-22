@@ -113,10 +113,11 @@ function Menu() {
 
           {category.items.map((item) => (
 
-            <MenuItem
-              key={item.name}
-              item={item}
-            />
+          <MenuItem
+  key={item.name}
+  item={item}
+  category={category.category}
+/>
 
           ))}
 <FloatingCart />

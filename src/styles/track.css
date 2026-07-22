@@ -63,3 +63,8 @@
     text-align:center;
     font-weight:bold;
 }
+.status-pill.Cancelled {
+  background: #ffe5e5;
+  color: red;
+  border: 1px solid red;
+}

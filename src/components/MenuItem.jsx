@@ -16,7 +16,8 @@ import dessertImg from "../assets/images/deserdt.avif";
 import iceCreamImg from "../assets/images/ice ream.jfif";
 import momosImg from "../assets/images/momos.avif";
 
-function MenuItem({ item }) {
+
+function MenuItem({ item, category }) {
 
   const { addToCart } = useContext(CartContext);
 
@@ -27,6 +28,15 @@ function MenuItem({ item }) {
   });
 
   const getImage = () => {
+    if (
+  category === "Pizza Mania" ||
+  category === "Double Pizza" ||
+  category === "Kitskos Simple Pizza" ||
+  category === "Ultimate Pizza" ||
+  category === "Special Pizza"
+) {
+  return "/images/pizza.jpg";
+}
 
     const name = item.name.toLowerCase();
 
@@ -53,6 +63,7 @@ function MenuItem({ item }) {
       name.includes("momos") ||
       name.includes("spring roll")
     ) return momosImg;
+    
 
     if (
       name.includes("coffee") ||

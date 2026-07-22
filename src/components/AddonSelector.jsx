@@ -20,26 +20,38 @@ function AddonSelector({
     }
   }, [selectedAddons, selectedVariant, instruction]);
 
-  const toggleAddon = (addon) => {
+const toggleAddon = (addon) => {
 
-    const exists = selectedAddons.find(
-      (a) => a.name === addon.name
-    );
+  if (addon.prices && !selectedVariant) {
+    alert("Please select pizza size first.");
+    return;
+  }
 
-    if (exists) {
-      setSelectedAddons(
-        selectedAddons.filter(
-          (a) => a.name !== addon.name
-        )
-      );
-    } else {
-      setSelectedAddons([
-        ...selectedAddons,
-        addon
-      ]);
-    }
-
+  const addonWithPrice = {
+    ...addon,
+    price: addon.prices
+      ? addon.prices[selectedVariant.name]
+      : addon.price
   };
+
+  const exists = selectedAddons.find(
+    (a) => a.name === addon.name
+  );
+
+  if (exists) {
+    setSelectedAddons(
+      selectedAddons.filter(
+        (a) => a.name !== addon.name
+      )
+    );
+  } else {
+    setSelectedAddons([
+      ...selectedAddons,
+      addonWithPrice
+    ]);
+  }
+
+};
 
   return (
 
@@ -118,13 +130,21 @@ function AddonSelector({
 
               {" "}
 
-              {addon.name}
+  {addon.name}
 
-              {" (+₹"}
+{" (+₹"}
 
-              {addon.price}
+{
+  addon.prices
+    ? (
+        selectedVariant
+          ? addon.prices[selectedVariant.name]
+          : "-"
+      )
+    : addon.price
+}
 
-              {")"}
+{")"}
 
             </label>
 

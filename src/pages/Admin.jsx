@@ -4,7 +4,8 @@ import {
   collection,
   onSnapshot,
   doc,
-  updateDoc
+  updateDoc,
+  deleteDoc
 } from "firebase/firestore";
 
 import app from "../firebase/config";
@@ -16,6 +17,7 @@ function Admin() {
   const db = getFirestore(app);
 
   const [orders, setOrders] = useState([]);
+  const [notification, setNotification] = useState("");
 
   // Fixed date format
   const today = new Date();
@@ -30,40 +32,98 @@ function Admin() {
   const [tableSearch, setTableSearch] = useState("");
 
 
-  useEffect(() => {
+useEffect(() => {
 
-    const unsubscribe = onSnapshot(
-      collection(db, "orders"),
+  const unsubscribe = onSnapshot(
 
-      (snapshot) => {
+    collection(db, "orders"),
 
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data()
-        }));
+    (snapshot) => {
 
 
-        data.sort((a,b)=>{
+      const data = snapshot.docs.map((doc) => ({
 
-          if(!a.createdAt || !b.createdAt)
-            return 0;
+        id: doc.id,
 
-          return b.createdAt.seconds - a.createdAt.seconds;
+        ...doc.data()
+
+      }));
+
+
+
+      // 🔔 NEW ORDER ALERT
+
+      const newOrder = snapshot.docChanges()
+      .some(
+        change => change.type === "added"
+      );
+
+
+
+      if(newOrder){
+
+        setNotification(
+          "🔔 New Order Received!"
+        );
+
+
+        setTimeout(()=>{
+
+          setNotification("");
+
+        },5000);
+
+
+        // Sound
+
+        const audio = new Audio(
+          "/sounds/new-order.mp3"
+        );
+
+
+        audio.play()
+        .catch((error)=>{
+
+          console.log(
+            "Sound blocked:",
+            error
+          );
 
         });
 
-
-        setOrders(data);
-
       }
-    );
 
 
-    return () => unsubscribe();
 
 
-  }, []);
+      data.sort((a,b)=>{
 
+        if(!a.createdAt || !b.createdAt)
+
+          return 0;
+
+
+        return b.createdAt.seconds -
+        a.createdAt.seconds;
+
+
+      });
+
+
+
+      setOrders(data);
+
+
+    }
+
+  );
+
+
+
+  return () => unsubscribe();
+
+
+}, []);
 
 
   // Update order status
@@ -78,6 +138,22 @@ function Admin() {
     );
 
   };
+  // Delete Order
+
+const deleteOrder = async(id)=>{
+
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this order?"
+  );
+
+  if(!confirmDelete) return;
+
+
+  await deleteDoc(
+    doc(db,"orders",id)
+  );
+
+};
 
 
 
@@ -207,7 +283,41 @@ return matchDate &&
       <h1 className="dashboard-title">
         👨‍🍳 Kitskos Kitchen Dashboard
       </h1>
+{
+notification &&
 
+<div
+style={{
+
+position:"fixed",
+
+top:"20px",
+
+right:"20px",
+
+background:"green",
+
+color:"white",
+
+padding:"15px 25px",
+
+borderRadius:"10px",
+
+fontSize:"18px",
+
+fontWeight:"bold",
+
+zIndex:9999
+
+}}
+
+>
+
+{notification}
+
+</div>
+
+}
 
 
       <div className="summary">
@@ -549,8 +659,11 @@ return matchDate &&
       style={{marginLeft:"10px"}}
       >
 
-      {order.status}
-
+{
+  order.status === "Cancelled"
+  ? "❌ Cancelled"
+  : order.status
+}
       </span>
 
       </h3>
@@ -633,6 +746,23 @@ return matchDate &&
       Cancel Order
 
       </button>
+      <button
+
+className="add-btn"
+
+style={{
+  background:"black"
+}}
+
+onClick={()=>
+deleteOrder(order.id)
+}
+
+>
+
+Delete Order
+
+</button>
 
 
 

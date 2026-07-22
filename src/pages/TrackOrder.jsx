@@ -68,26 +68,29 @@ function TrackOrder() {
 
   const getStatusEmoji = () => {
 
-    switch (order.status) {
+  switch (order.status) {
 
-      case "Pending":
-        return "🟡";
+    case "Pending":
+      return "🟡";
 
-      case "Preparing":
-        return "🟠";
+    case "Preparing":
+      return "🟠";
 
-      case "Ready":
-        return "🟢";
+    case "Ready":
+      return "🟢";
 
-      case "Completed":
-        return "⚫";
+    case "Completed":
+      return "⚫";
 
-      default:
-        return "🟡";
+    case "Cancelled":
+      return "❌";
 
-    }
+    default:
+      return "🟡";
 
-  };
+  }
+
+};
 
   return (
 
