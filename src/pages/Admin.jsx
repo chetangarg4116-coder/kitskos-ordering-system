@@ -607,6 +607,17 @@ zIndex:9999
 
       <strong>
       {item.quantity} × {item.name}
+      {item.toppings?.length > 0 && (
+  <div>
+    🍕 Toppings: {item.toppings.join(", ")}
+  </div>
+)}
+
+{item.base && (
+  <div>
+    🧀 Pizza Base: {item.base.name} (+₹{item.base.price})
+  </div>
+)}
       </strong>
 
 

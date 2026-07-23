@@ -36,8 +36,7 @@ useEffect(() => {
   selectedBase
 ]);
   
-const handleComboChange = (title, value) => {
-  const toggleTopping = (topping) => {
+const toggleTopping = (topping) => {
 
   if (selectedToppings.includes(topping)) {
 
@@ -46,7 +45,6 @@ const handleComboChange = (title, value) => {
     );
 
     return;
-
   }
 
   if (selectedToppings.length >= 5) {
@@ -54,7 +52,6 @@ const handleComboChange = (title, value) => {
     alert("Maximum 5 toppings allowed.");
 
     return;
-
   }
 
   setSelectedToppings([
@@ -63,10 +60,15 @@ const handleComboChange = (title, value) => {
   ]);
 
 };
+
+
+const handleComboChange = (title, value) => {
+
   setComboChoices((prev) => ({
     ...prev,
     [title]: value
   }));
+
 };
 const toggleAddon = (addon) => {
 

@@ -64,6 +64,17 @@ function Cart() {
               <div className="cart-item-top">
 
                 <h3>{item.name}</h3>
+                {item.toppings?.length > 0 && (
+  <p>
+    🍕 Toppings: {item.toppings.join(", ")}
+  </p>
+)}
+
+{item.base && (
+  <p>
+    🧀 Pizza Base: {item.base.name} (+₹{item.base.price})
+  </p>
+)}
 
                 <div className="item-price">
                   ₹{item.price}

@@ -21,12 +21,15 @@ function MenuItem({ item, category }) {
 
   const { addToCart } = useContext(CartContext);
 
-const [selection, setSelection] = useState({
-  addons: [],
-  variant: null,
-  instruction: "",
-  comboChoices: {}
-});
+  const [selection, setSelection] = useState({
+    addons: [],
+    variant: null,
+    instruction: "",
+    comboChoices: {},
+    toppings: [],
+    base: null
+  });
+
 
   const getImage = () => {
     if (
@@ -83,15 +86,20 @@ const [selection, setSelection] = useState({
     let basePrice = item.price || 0;
 
     if (selection.variant) {
-      basePrice = selection.variant.price;
+      const basePrice = selection.variant.price;
     }
 
     const addonPrice = selection.addons.reduce(
-      (total, addon) => total + addon.price,
+      (sum, addon) => sum + addon.price,
       0
     );
 
-    const finalPrice = basePrice + addonPrice;
+    const variantPrice = selection.variant?.price || basePrice;
+
+const baseOptionPrice = selection.base?.price || 0;
+
+const finalPrice =
+  variantPrice + addonPrice + baseOptionPrice;
 if (item.comboSelections) {
 
   for (const combo of item.comboSelections) {
@@ -107,22 +115,16 @@ if (item.comboSelections) {
   }
 
 }
+
+
+
 addToCart({
-
   ...item,
-
   price: finalPrice,
-
-  basePrice,
-
-  variant: selection.variant,
-
-  addons: selection.addons,
-
-  instruction: selection.instruction,
-
-  comboChoices: selection.comboChoices
-
+  selectedVariant: selection.variant,
+  toppings: selection.toppings || [],
+  base: selection.base || null,
+  addons: selection.addons || []
 });
 
     alert(`${item.name} added to cart`);
@@ -162,12 +164,11 @@ addToCart({
 <AddonSelector
   addons={item.addons || []}
   variants={item.variants || []}
-  comboSelections={item.comboSelections || []}
   toppings={item.toppings || []}
   baseOptions={item.baseOptions || []}
+  comboSelections={item.comboSelections || []}
   onChange={setSelection}
 />
-
       <br />
 
       <button
