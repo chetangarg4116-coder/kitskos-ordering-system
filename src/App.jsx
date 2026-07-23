@@ -4,6 +4,7 @@ import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
 import Admin from "./pages/Admin";
 import TrackOrder from "./pages/TrackOrder";
+import AdminLogin from "./pages/AdminLogin";
 
 import { CartProvider } from "./context/CartContext";
 
@@ -40,6 +41,11 @@ function App() {
             path="/track/:id"
             element={<TrackOrder />}
           />
+
+          <Route
+  path="/admin-login"
+  element={<AdminLogin />}
+/>
 
           {/* Kitchen Dashboard */}
           <Route

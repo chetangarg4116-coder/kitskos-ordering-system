@@ -9,12 +9,16 @@ import {
 } from "firebase/firestore";
 
 import app from "../firebase/config";
+import { auth } from "../firebase/config";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import "../styles/admin.css";
 
 
 function Admin() {
 
   const db = getFirestore(app);
+  const navigate = useNavigate();
 
 // Fixed date format
 const today = new Date();
@@ -34,6 +38,15 @@ const [notification, setNotification] = useState("");
 const notificationSound = useRef(null);
 
 const previousOrderCount = useRef(0);
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      navigate("/admin-login");
+    }
+  });
+
+  return () => unsubscribe();
+}, [navigate]);
 
 useEffect(() => {
 
@@ -149,7 +162,10 @@ if(notificationSound.current){
 
 
   // Update order status
-
+const handleLogout = async () => {
+  await signOut(auth);
+  navigate("/admin-login");
+};
   const updateStatus = async(id,status)=>{
 
     await updateDoc(
@@ -313,6 +329,21 @@ return (
       <h1 className="dashboard-title">
         👨‍🍳 Kitskos Kitchen Dashboard
       </h1>
+      <button
+  onClick={handleLogout}
+  style={{
+    float: "right",
+    background: "#e53935",
+    color: "#fff",
+    border: "none",
+    padding: "10px 18px",
+    borderRadius: "6px",
+    cursor: "pointer",
+    marginBottom: "20px"
+  }}
+>
+  Logout
+</button>
 {
 notification &&
 
