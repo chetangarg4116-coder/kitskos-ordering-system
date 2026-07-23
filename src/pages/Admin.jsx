@@ -590,123 +590,71 @@ zIndex:9999
 
 
 
-      <h3>Ordered Items</h3>
+<h3>Ordered Items</h3>
 
+{
+  order.items.map((item, index) => (
 
-
-      {
-      order.items.map((item,index)=>(
-
-
-      <div
+    <div
       key={index}
-      style={{marginBottom:"15px"}}
-      >
-
-
+      style={{ marginBottom: "15px" }}
+    >
 
       <strong>
-      {item.quantity} × {item.name}
-      {item.toppings?.length > 0 && (
-  <div>
-    🍕 Toppings: {item.toppings.join(", ")}
-  </div>
-)}
-
-{item.base && (
-  <div>
-    🧀 Pizza Base: {item.base.name} (+₹{item.base.price})
-  </div>
-)}
+        {item.quantity} × {item.name}
       </strong>
 
+      {item.selectedVariant && (
+        <p>
+          📏 Size: {item.selectedVariant.name}
+        </p>
+      )}
 
+      {item.toppings?.length > 0 && (
+        <p>
+          🍕 Toppings: {item.toppings.join(", ")}
+        </p>
+      )}
 
-      {
-      item.variant &&
+      {item.base && (
+        <p>
+          🧀 Base: {item.base.name} (+₹{item.base.price})
+        </p>
+      )}
 
-      <p>
-      Size : {item.variant.name}
-      </p>
-      }
+      {item.addons?.length > 0 && (
+        <p>
+          ➕ Extras: {item.addons.map(addon => addon.name).join(", ")}
+        </p>
+      )}
 
+      {item.comboChoices &&
+        Object.keys(item.comboChoices).length > 0 && (
+          <div>
+            <strong>Selected Items</strong>
 
+            <ul>
+              {Object.entries(item.comboChoices).map(
+                ([title, value], i) => (
+                  <li key={i}>
+                    <strong>{title}:</strong> {value}
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
+      )}
 
-      {
-      item.addons &&
-      item.addons.length>0 &&
+      {item.instruction && (
+        <p>
+          📝 {item.instruction}
+        </p>
+      )}
 
+    </div>
 
-      <div>
-
-      <strong>Extras</strong>
-
-      <ul>
-
-      {
-      item.addons.map((addon,i)=>(
-
-      <li key={i}>
-      {addon.name}
-      </li>
-
-      ))
-      }
-
-      </ul>
-
-      </div>
-
-      }
-
-
-{item.comboChoices &&
-Object.keys(item.comboChoices).length > 0 && (
-
-<div>
-
-<strong>Selected Items</strong>
-
-<ul>
-
-{Object.entries(item.comboChoices).map(
-([title,value],index)=>(
-
-<li key={index}>
-
-<strong>{title}:</strong> {value}
-
-</li>
-
-))
-
+  ))
 }
-
-</ul>
-
-</div>
-
-)}
-      {
-      item.instruction &&
-
-      <p>
-      📝 {item.instruction}
-      </p>
-
-      }
-
-
-
-      </div>
-
-
-      ))
-      }
-
-
-
-
       <hr/>
 
 
@@ -784,7 +732,7 @@ Object.keys(item.comboChoices).length > 0 && (
 
 
       <button
-      className="add-btn"
+     className="add-btn"
       onClick={()=>
       updateStatus(order.id,"Completed")
       }
@@ -841,9 +789,9 @@ Delete Order
       </div>
 
 
-      ))
-
-      }
+       ))
+}
+     
 
 
       </div>
@@ -860,4 +808,4 @@ Delete Order
 
 }
 
-export default Admin;
+export default Admin; 

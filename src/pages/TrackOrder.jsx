@@ -168,7 +168,25 @@ function TrackOrder() {
                   {item.quantity} × {item.name}
 
                 </strong>
+{item.selectedVariant && (
+      <p>
+        📏 Size: {item.selectedVariant.name}
+      </p>
+    )}
 
+
+    {item.toppings?.length > 0 && (
+      <p>
+        🍕 Toppings: {item.toppings.join(", ")}
+      </p>
+    )}
+
+
+    {item.base && (
+      <p>
+        🧀 Base: {item.base.name} (+₹{item.base.price})
+      </p>
+    )}
                 {
 
                   item.variant && (
