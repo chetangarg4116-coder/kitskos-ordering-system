@@ -124,6 +124,32 @@ function Cart() {
                 </p>
 
               )}
+              {item.comboChoices &&
+ Object.keys(item.comboChoices).length > 0 && (
+
+  <div className="addons">
+
+    <strong>Selected Items</strong>
+
+    <ul>
+
+      {Object.entries(item.comboChoices).map(
+        ([title, value], index) => (
+
+          <li key={index}>
+
+            <strong>{title}:</strong> {value}
+
+          </li>
+
+        )
+      )}
+
+    </ul>
+
+  </div>
+
+)}
 
               <div className="qty-row">
 

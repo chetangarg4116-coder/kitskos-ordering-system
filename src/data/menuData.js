@@ -997,6 +997,255 @@ const menuData = [
       addons: pizzaAddons
     }
   ]
+},
+{
+  category: "Combo",
+  items: [
+    {
+      name: "Tandoori Paneer Sandwich + Vanilla Shake + Salted Fries",
+      description: "🥪🥤🍟",
+      price: 249
+    },
+    {
+      name: "Crispy Wrap + Salted Fries + Coke",
+      description: "🌯🍟🥤",
+      price: 149
+    },
+    {
+      name: "Red Pasta / White Pasta + Mojito + Salted Fries",
+      description: "🍝🍹🍟",
+      price: 239,
+      comboSelections: [
+        {
+          title: "Choose Pasta",
+          options: ["Red Pasta", "White Pasta"]
+        },
+        {
+          title: "Choose Mojito",
+          options: [
+            "Virgin Mojito",
+            "Green Apple Mojito",
+            "Masala Mojito",
+            "Watermelon Mojito",
+            "Blue Curacao Mojito",
+            "Strawberry Mojito"
+          ]
+        }
+      ]
+    },
+    {
+      name: "Crazy Burger + Salted Fries + Coke",
+      description: "🍔🍟🥤",
+      price: 149
+    },
+    {
+      name: "Paneer Burger + Salted Fries + Mix Fruit Juice",
+      description: "🍔🍟🧃",
+      price: 199
+    },
+    {
+      name: "Any 3 Double Pizza",
+      description: "🍕🍕🍕",
+      price: 249,
+      comboSelections: [
+        {
+          title: "Pizza 1",
+          options: [
+            "Onion + Capsicum",
+            "Onion + Paneer",
+            "Onion + Sweet Corn"
+          ]
+        },
+        {
+          title: "Pizza 2",
+          options: [
+            "Onion + Capsicum",
+            "Onion + Paneer",
+            "Onion + Sweet Corn"
+          ]
+        },
+        {
+          title: "Pizza 3",
+          options: [
+            "Onion + Capsicum",
+            "Onion + Paneer",
+            "Onion + Sweet Corn"
+          ]
+        }
+      ]
+    },
+    {
+      name: "Any 2 Medium Ultimate Pizza",
+      description: "🍕🍕",
+      price: 499,
+      comboSelections: [
+        {
+          title: "Ultimate Pizza 1",
+          options: [
+            "Mexican Lover",
+            "Indian Choice",
+            "Tandoori Paneer Pizza",
+            "Farm House Pizza"
+          ]
+        },
+        {
+          title: "Ultimate Pizza 2",
+          options: [
+            "Mexican Lover",
+            "Indian Choice",
+            "Tandoori Paneer Pizza",
+            "Farm House Pizza"
+          ]
+        }
+      ]
+    },
+    {
+      name: "Any 2 Medium Special Pizza",
+      description: "🍕🍕",
+      price: 649,
+      comboSelections: [
+        {
+          title: "Special Pizza 1",
+          options: [
+            "Kitskos Special",
+            "Paneer Lover",
+            "Loaded Cheese",
+            "Indo Western"
+          ]
+        },
+        {
+          title: "Special Pizza 2",
+          options: [
+            "Kitskos Special",
+            "Paneer Lover",
+            "Loaded Cheese",
+            "Indo Western"
+          ]
+        }
+      ]
+    },
+    {
+      name: "1 Special Medium Pizza + Any Mojito",
+      description: "🍕🍹",
+      price: 349,
+      comboSelections: [
+        {
+          title: "Choose Pizza",
+          options: [
+            "Kitskos Special",
+            "Paneer Lover",
+            "Loaded Cheese",
+            "Indo Western"
+          ]
+        },
+        {
+          title: "Choose Mojito",
+          options: [
+            "Virgin Mojito",
+            "Green Apple Mojito",
+            "Masala Mojito",
+            "Watermelon Mojito",
+            "Blue Curacao Mojito",
+            "Strawberry Mojito"
+          ]
+        }
+      ]
+    },
+    {
+      name: "Any 1 Double Pizza + Crazy Burger + Cold Coffee",
+      description: "🍕🍔☕",
+      price: 229,
+      comboSelections: [
+        {
+          title: "Choose Double Pizza",
+          options: [
+            "Onion + Capsicum",
+            "Onion + Paneer",
+            "Onion + Sweet Corn"
+          ]
+        }
+      ]
+    },
+    {
+      name: "Cold Coffee + Veg Sandwich",
+      description: "☕🥪",
+      price: 159
+    },
+    {
+      name: "Coke + Veg Wrap",
+      description: "🥤🌯",
+      price: 99
+    },
+    {
+      name: "Veg Maggie + Any Mojito",
+      description: "🍜🍹",
+      price: 169,
+      comboSelections: [
+        {
+          title: "Choose Mojito",
+          options: [
+            "Virgin Mojito",
+            "Green Apple Mojito",
+            "Masala Mojito",
+            "Watermelon Mojito",
+            "Blue Curacao Mojito",
+            "Strawberry Mojito"
+          ]
+        }
+      ]
+    },
+    {
+      name: "White Sauce Pasta + Fruit Beer",
+      description: "🍝🍺",
+      price: 159
+    }
+  ]
+},
+{
+  category: "🍕 Build Your Own Pizza",
+  items: [
+    {
+      name: "Build Your Own Pizza",
+      description: "Choose up to 5 toppings",
+      image: "/images/pizza.jpg",
+      variants: [
+        { name: "Small", price: 219 },
+        { name: "Medium", price: 379 }
+      ],
+
+      customPizza: true,
+
+      toppings: [
+        "Onion",
+        "Capsicum",
+        "Tomato",
+        "Black Olives",
+        "Mushroom",
+        "Paneer",
+        "Green Chilli",
+        "Jalapeño",
+        "Red Paprika",
+        "Sweet Corn"
+      ],
+
+      baseOptions: [
+        {
+          name: "Pan Base",
+          prices: {
+            Small: 30,
+            Medium: 50
+          }
+        },
+        {
+          name: "Cheese Burst",
+          prices: {
+            Small: 60,
+            Medium: 90
+          }
+        }
+      ]
+    }
+  ]
 }
 ];
 

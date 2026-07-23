@@ -3,23 +3,71 @@ import { useState, useEffect } from "react";
 function AddonSelector({
   addons = [],
   variants = [],
+  comboSelections = [],
+  toppings = [],
+  baseOptions = [],
   onChange
 }) {
 
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [instruction, setInstruction] = useState("");
+  const [comboChoices, setComboChoices] = useState({});
+  const [selectedToppings, setSelectedToppings] = useState([]);
+const [selectedBase, setSelectedBase] = useState(null);
 
-  useEffect(() => {
-    if (onChange) {
-      onChange({
-        addons: selectedAddons,
-        variant: selectedVariant,
-        instruction
-      });
-    }
-  }, [selectedAddons, selectedVariant, instruction]);
+useEffect(() => {
+  if (onChange) {
+    onChange({
+      addons: selectedAddons,
+      variant: selectedVariant,
+      instruction,
+      comboChoices,
+      toppings: selectedToppings,
+      base: selectedBase
+    });
+  }
+}, [
+  selectedAddons,
+  selectedVariant,
+  instruction,
+  comboChoices,
+  selectedToppings,
+  selectedBase
+]);
+  
+const handleComboChange = (title, value) => {
+  const toggleTopping = (topping) => {
 
+  if (selectedToppings.includes(topping)) {
+
+    setSelectedToppings(
+      selectedToppings.filter(t => t !== topping)
+    );
+
+    return;
+
+  }
+
+  if (selectedToppings.length >= 5) {
+
+    alert("Maximum 5 toppings allowed.");
+
+    return;
+
+  }
+
+  setSelectedToppings([
+    ...selectedToppings,
+    topping
+  ]);
+
+};
+  setComboChoices((prev) => ({
+    ...prev,
+    [title]: value
+  }));
+};
 const toggleAddon = (addon) => {
 
   if (addon.prices && !selectedVariant) {
@@ -144,7 +192,7 @@ const toggleAddon = (addon) => {
     : addon.price
 }
 
-{")"}
+
 
             </label>
 
@@ -153,7 +201,139 @@ const toggleAddon = (addon) => {
         </>
 
       )}
+{comboSelections.length > 0 && (
+  <>
+    <h4>Choose Combo Items</h4>
 
+    {comboSelections.map((selection, index) => (
+      <div
+        key={index}
+        style={{ marginBottom: "15px" }}
+      >
+        <strong>{selection.title}</strong>
+
+        <select
+          value={
+            comboChoices[selection.title] || ""
+          }
+          onChange={(e) =>
+            handleComboChange(
+              selection.title,
+              e.target.value
+            )
+          }
+          style={{
+            width: "100%",
+            padding: "8px",
+            marginTop: "5px",
+            borderRadius: "8px"
+          }}
+        >
+          <option value="">
+            Select {selection.title}
+          </option>
+
+          {selection.options.map((option, i) => (
+            <option
+              key={i}
+              value={option}
+            >
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+    ))}
+  </>
+)}
+{toppings.length > 0 && (
+
+<>
+
+<h4>Choose up to 5 Toppings</h4>
+
+<p>
+
+Selected {selectedToppings.length}/5
+
+</p>
+
+{toppings.map((topping,index)=>(
+
+<label
+key={index}
+style={{
+display:"block",
+marginBottom:"5px"
+}}
+>
+
+<input
+type="checkbox"
+checked={selectedToppings.includes(topping)}
+onChange={()=>
+toggleTopping(topping)
+}
+/>
+
+{" "}
+
+{topping}
+
+</label>
+
+))}
+
+</>
+
+)}
+{baseOptions.length > 0 && selectedVariant && (
+
+<>
+
+<h4>Select Pizza Base</h4>
+
+{baseOptions.map((base,index)=>(
+
+<label
+key={index}
+style={{
+display:"block",
+marginBottom:"6px"
+}}
+>
+
+<input
+type="radio"
+name="pizzaBase"
+checked={
+selectedBase?.name===base.name
+}
+onChange={()=>
+setSelectedBase({
+name:base.name,
+price:base.prices[selectedVariant.name]
+})
+}
+/>
+
+{" "}
+
+{base.name}
+
+{" (+₹"}
+
+{base.prices[selectedVariant.name]}
+
+{")"}
+
+</label>
+
+))}
+
+</>
+
+)}
       <h4>Special Instructions</h4>
 
       <textarea

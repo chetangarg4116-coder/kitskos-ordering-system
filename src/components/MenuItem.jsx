@@ -21,11 +21,12 @@ function MenuItem({ item, category }) {
 
   const { addToCart } = useContext(CartContext);
 
-  const [selection, setSelection] = useState({
-    addons: [],
-    variant: null,
-    instruction: ""
-  });
+const [selection, setSelection] = useState({
+  addons: [],
+  variant: null,
+  instruction: "",
+  comboChoices: {}
+});
 
   const getImage = () => {
     if (
@@ -91,22 +92,38 @@ function MenuItem({ item, category }) {
     );
 
     const finalPrice = basePrice + addonPrice;
+if (item.comboSelections) {
 
-    addToCart({
+  for (const combo of item.comboSelections) {
 
-      ...item,
+    if (!selection.comboChoices?.[combo.title]) {
 
-      price: finalPrice,
+      alert(`Please select ${combo.title}`);
 
-      basePrice,
+      return;
 
-      variant: selection.variant,
+    }
 
-      addons: selection.addons,
+  }
 
-      instruction: selection.instruction
+}
+addToCart({
 
-    });
+  ...item,
+
+  price: finalPrice,
+
+  basePrice,
+
+  variant: selection.variant,
+
+  addons: selection.addons,
+
+  instruction: selection.instruction,
+
+  comboChoices: selection.comboChoices
+
+});
 
     alert(`${item.name} added to cart`);
 
@@ -116,11 +133,23 @@ function MenuItem({ item, category }) {
 
     <div className="menu-card">
 
-      <img
-        src={getImage()}
-        alt={item.name}
-        className="food-image"
-      />
+{category === "Combo" || category === "🍕 Build Your Own Pizza" ? (
+  <div
+    style={{
+      fontSize: "70px",
+      textAlign: "center",
+      padding: "20px 0"
+    }}
+  >
+    {category === "Combo" ? item.description : "🍕"}
+  </div>
+) : (
+  <img
+    src={getImage()}
+    alt={item.name}
+    className="food-image"
+  />
+)}
 
       <h3>{item.name}</h3>
 
@@ -130,11 +159,14 @@ function MenuItem({ item, category }) {
         ₹{item.price}
       </p>
 
-      <AddonSelector
-        addons={item.addons || []}
-        variants={item.variants || []}
-        onChange={setSelection}
-      />
+<AddonSelector
+  addons={item.addons || []}
+  variants={item.variants || []}
+  comboSelections={item.comboSelections || []}
+  toppings={item.toppings || []}
+  baseOptions={item.baseOptions || []}
+  onChange={setSelection}
+/>
 
       <br />
 

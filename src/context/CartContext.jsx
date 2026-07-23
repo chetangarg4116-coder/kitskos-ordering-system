@@ -20,9 +20,16 @@ export function CartProvider({ children }) {
           .join(",")
       : "";
 
-    const note = item.instruction || "";
+  const note = item.instruction || "";
 
-    return `${item.name}_${variant}_${addons}_${note}`;
+const comboChoices = item.comboChoices
+  ? Object.entries(item.comboChoices)
+      .sort()
+      .map(([key, value]) => `${key}:${value}`)
+      .join("|")
+  : "";
+
+return `${item.name}_${variant}_${addons}_${comboChoices}_${note}`;
 
   };
 

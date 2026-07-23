@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import {
   getFirestore,
   collection,
@@ -16,114 +16,136 @@ function Admin() {
 
   const db = getFirestore(app);
 
-  const [orders, setOrders] = useState([]);
-  const [notification, setNotification] = useState("");
+// Fixed date format
+const today = new Date();
 
-  // Fixed date format
-  const today = new Date();
+const todayFormatted =
+  `${String(today.getDate()).padStart(2, "0")}/${String(today.getMonth() + 1).padStart(2, "0")}/${today.getFullYear()}`;
 
-  const todayFormatted =
-    `${String(today.getDate()).padStart(2,"0")}/${String(today.getMonth()+1).padStart(2,"0")}/${today.getFullYear()}`;
+const [orders, setOrders] = useState([]);
+const [loading, setLoading] = useState(true);
+const [selectedDate, setSelectedDate] = useState(todayFormatted);
 
-  const [selectedDate, setSelectedDate] = useState(todayFormatted);
+const [statusFilter, setStatusFilter] = useState("All");
+const [tableSearch, setTableSearch] = useState("");
 
-  const [statusFilter, setStatusFilter] = useState("All");
+const [notification, setNotification] = useState("");
 
-  const [tableSearch, setTableSearch] = useState("");
+const notificationSound = useRef(null);
 
+const previousOrderCount = useRef(0);
 
 useEffect(() => {
 
+  const unlockAudio = () => {
+
+    if(notificationSound.current){
+
+      notificationSound.current.play()
+      .then(()=>{
+
+        notificationSound.current.pause();
+        notificationSound.current.currentTime = 0;
+
+      })
+      .catch(()=>{});
+
+    }
+
+  };
+
+
+  window.addEventListener("click", unlockAudio, { once:true });
+
+
+  return () => {
+    window.removeEventListener("click", unlockAudio);
+  };
+
+
+}, []);
+
+useEffect(() => {
+  if(!notificationSound.current){
+  notificationSound.current = new Audio("/notification.mp3");
+  notificationSound.current.volume = 1;
+}
+
   const unsubscribe = onSnapshot(
-
     collection(db, "orders"),
-
     (snapshot) => {
 
-
       const data = snapshot.docs.map((doc) => ({
-
         id: doc.id,
-
         ...doc.data()
-
       }));
 
 
-
       // 🔔 NEW ORDER ALERT
-
       const newOrder = snapshot.docChanges()
-      .some(
-        change => change.type === "added"
-      );
-
-
-
-      if(newOrder){
-
-        setNotification(
-          "🔔 New Order Received!"
+        .some(
+          change => change.type === "added"
         );
+
+
+      if(newOrder && previousOrderCount.current !== 0){
+
+        setNotification("🔔 New Order Received!");
+
+const sound = notificationSound.current;
+
+sound.currentTime = 0;
+
+sound.play()
+.then(() => {
+  console.log("Notification sound played");
+})
+notificationSound.current.currentTime = 0;
+
+if(notificationSound.current){
+
+  notificationSound.current.currentTime = 0;
+
+  notificationSound.current.play()
+  .then(()=>{
+    console.log("Sound played");
+  })
+  .catch((error)=>{
+    console.log("Sound error:", error);
+  });
+
+}
 
 
         setTimeout(()=>{
-
           setNotification("");
-
         },5000);
-
-
-        // Sound
-
-        const audio = new Audio(
-          "/sounds/new-order.mp3"
-        );
-
-
-        audio.play()
-        .catch((error)=>{
-
-          console.log(
-            "Sound blocked:",
-            error
-          );
-
-        });
 
       }
 
 
+      previousOrderCount.current = snapshot.size;
 
 
       data.sort((a,b)=>{
 
-        if(!a.createdAt || !b.createdAt)
-
-          return 0;
-
-
-        return b.createdAt.seconds -
-        a.createdAt.seconds;
-
+        return b.createdAt?.seconds - a.createdAt?.seconds;
 
       });
 
 
-
       setOrders(data);
-
+      setLoading(false);
 
     }
-
   );
-
 
 
   return () => unsubscribe();
 
 
 }, []);
+
 
 
   // Update order status
@@ -275,9 +297,17 @@ return matchDate &&
   filteredOrders.filter(
     order=>order.status==="Cancelled"
   ).length;
-    return (
+return (
 
-    <div className="admin-container">
+  <>
+  
+  {notification && (
+    <div className="notification-alert">
+      {notification}
+    </div>
+  )}
+
+  <div className="admin-container">
 
 
       <h1 className="dashboard-title">
@@ -619,7 +649,33 @@ zIndex:9999
       }
 
 
+{item.comboChoices &&
+Object.keys(item.comboChoices).length > 0 && (
 
+<div>
+
+<strong>Selected Items</strong>
+
+<ul>
+
+{Object.entries(item.comboChoices).map(
+([title,value],index)=>(
+
+<li key={index}>
+
+<strong>{title}:</strong> {value}
+
+</li>
+
+))
+
+}
+
+</ul>
+
+</div>
+
+)}
       {
       item.instruction &&
 
@@ -786,11 +842,11 @@ Delete Order
 
 
 
-    </div>
+   </div>
 
-  );
+</>
+);
 
 }
-
 
 export default Admin;
