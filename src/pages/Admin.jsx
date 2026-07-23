@@ -548,6 +548,10 @@ zIndex:9999
       🍽 Table {order.tableNumber}
       </h2>
 
+      <p>
+  <strong>Order ID:</strong> {order.id}
+</p>
+
 
 
       <p>
