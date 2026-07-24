@@ -650,6 +650,19 @@ zIndex:9999
           🍕 Toppings: {item.toppings.join(", ")}
         </p>
       )}
+      {item.comboChoices &&
+  Object.keys(item.comboChoices).length > 0 && (
+    <p>
+      🛒 Selected:
+      <br />
+      {Object.entries(item.comboChoices).map(([key, value]) => (
+        <span key={key}>
+          • {key}: {value}
+          <br />
+        </span>
+      ))}
+    </p>
+)}
 
       {item.base && (
         <p>
@@ -663,23 +676,7 @@ zIndex:9999
         </p>
       )}
 
-      {item.comboChoices &&
-        Object.keys(item.comboChoices).length > 0 && (
-          <div>
-            <strong>Selected Items</strong>
-
-            <ul>
-              {Object.entries(item.comboChoices).map(
-                ([title, value], i) => (
-                  <li key={i}>
-                    <strong>{title}:</strong> {value}
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
-      )}
-
+      
       {item.instruction && (
         <p>
           📝 {item.instruction}

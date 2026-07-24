@@ -121,10 +121,16 @@ if (item.comboSelections) {
 addToCart({
   ...item,
   price: finalPrice,
+
+  // Save everything the customer selected
   selectedVariant: selection.variant,
   toppings: selection.toppings || [],
   base: selection.base || null,
-  addons: selection.addons || []
+  addons: selection.addons || [],
+  comboChoices: selection.comboChoices || {},
+
+  // Save complete selection object for future use
+  selection
 });
 
     alert(`${item.name} added to cart`);

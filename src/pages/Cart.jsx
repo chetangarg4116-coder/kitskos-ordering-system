@@ -64,6 +64,24 @@ function Cart() {
               <div className="cart-item-top">
 
                 <h3>{item.name}</h3>
+                {item.comboChoices &&
+  Object.keys(item.comboChoices).length > 0 && (
+    <div
+      style={{
+        marginTop: "8px",
+        fontSize: "14px",
+        color: "#555"
+      }}
+    >
+      <strong>Selected:</strong>
+
+      {Object.entries(item.comboChoices).map(([key, value]) => (
+        <div key={key}>
+          • {key}: {value}
+        </div>
+      ))}
+    </div>
+)}
                 {item.toppings?.length > 0 && (
   <p>
     🍕 Toppings: {item.toppings.join(", ")}
