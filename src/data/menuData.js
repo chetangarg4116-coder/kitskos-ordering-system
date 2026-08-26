@@ -1,3 +1,5 @@
+import coldCoffeeImg from "../assets/images/cold-coffee.jpg";
+
 const pizzaAddons = [
   {
     name: "Extra Toppings",
@@ -413,7 +415,7 @@ const menuData = [
         name: "Cold Coffee",
         description: "Chilled coffee shake with rich coffee flavour",
         price: 89,
-        image: "",
+        image: coldCoffeeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",

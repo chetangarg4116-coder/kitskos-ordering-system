@@ -12,6 +12,7 @@ import wrapImg from "../assets/images/wrap.jpeg";
 import drinkImg from "../assets/images/coco cola.jfif";
 import mojitoImg from "../assets/images/mojito.avif";
 import shakeImg from "../assets/images/shake.avif";
+import coldCoffeeImg from "../assets/images/cold-coffee.jpg";
 import dessertImg from "../assets/images/deserdt.avif";
 import iceCreamImg from "../assets/images/ice ream.jfif";
 import momosImg from "../assets/images/momos.avif";
@@ -69,13 +70,15 @@ function MenuItem({ item, category }) {
     ) return momosImg;
     
 
-    if (
-      name.includes("coffee") ||
-      name.includes("coke") ||
-      name.includes("tea") ||
-      name.includes("juice") ||
-      name.includes("beer")
-    ) return drinkImg;
+if (name === "cold coffee") return coldCoffeeImg;
+
+if (
+  name.includes("coffee") ||
+  name.includes("coke") ||
+  name.includes("tea") ||
+  name.includes("juice") ||
+  name.includes("beer")
+) return drinkImg;
 
     return burgerImg;
 
