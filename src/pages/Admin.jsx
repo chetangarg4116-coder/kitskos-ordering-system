@@ -5,7 +5,9 @@ import {
   onSnapshot,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
+  setDoc,
+  getDocs
 } from "firebase/firestore";
 
 import app from "../firebase/config";
@@ -13,6 +15,7 @@ import { auth } from "../firebase/config";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "../styles/admin.css";
+import menuData from "../data/menuData";
 
 
 function Admin() {
@@ -27,6 +30,7 @@ const todayFormatted =
   `${String(today.getDate()).padStart(2, "0")}/${String(today.getMonth() + 1).padStart(2, "0")}/${today.getFullYear()}`;
 
 const [orders, setOrders] = useState([]);
+
 const [loading, setLoading] = useState(true);
 const [selectedDate, setSelectedDate] = useState(todayFormatted);
 
@@ -34,6 +38,7 @@ const [statusFilter, setStatusFilter] = useState("All");
 const [tableSearch, setTableSearch] = useState("");
 
 const [notification, setNotification] = useState("");
+const [menuItems, setMenuItems] = useState([]);
 
 const notificationSound = useRef(null);
 
@@ -77,12 +82,33 @@ useEffect(() => {
 
 
 }, []);
+// 🍔 Load menu availability
+useEffect(() => {
+
+  const unsubscribe = onSnapshot(
+    collection(db, "menuItems"),
+    (snapshot) => {
+
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      setMenuItems(data);
+
+    }
+  );
+
+  return () => unsubscribe();
+
+}, []);
 
 useEffect(() => {
-  if(!notificationSound.current){
-  notificationSound.current = new Audio("/notification.mp3");
-  notificationSound.current.volume = 1;
-}
+
+  if (!notificationSound.current) {
+    notificationSound.current = new Audio("/notification.mp3");
+    notificationSound.current.volume = 1;
+  }
 
   const unsubscribe = onSnapshot(
     collection(db, "orders"),
@@ -93,71 +119,49 @@ useEffect(() => {
         ...doc.data()
       }));
 
-
       // 🔔 NEW ORDER ALERT
-      const newOrder = snapshot.docChanges()
-        .some(
-          change => change.type === "added"
-        );
+      const newOrder = snapshot.docChanges().some(
+        (change) => change.type === "added"
+      );
 
-
-      if(newOrder && previousOrderCount.current !== 0){
+      if (newOrder && previousOrderCount.current !== 0) {
 
         setNotification("🔔 New Order Received!");
 
-const sound = notificationSound.current;
+        const sound = notificationSound.current;
 
-sound.currentTime = 0;
+        sound.currentTime = 0;
 
-sound.play()
-.then(() => {
-  console.log("Notification sound played");
-})
-notificationSound.current.currentTime = 0;
+        sound.play()
+          .then(() => {
+            console.log("Notification sound played");
+          })
+          .catch((error) => {
+            console.log("Sound error:", error);
+          });
 
-if(notificationSound.current){
-
-  notificationSound.current.currentTime = 0;
-
-  notificationSound.current.play()
-  .then(()=>{
-    console.log("Sound played");
-  })
-  .catch((error)=>{
-    console.log("Sound error:", error);
-  });
-
-}
-
-
-        setTimeout(()=>{
+        setTimeout(() => {
           setNotification("");
-        },5000);
-
+        }, 5000);
       }
-
 
       previousOrderCount.current = snapshot.size;
 
-
-      data.sort((a,b)=>{
-
-        return b.createdAt?.seconds - a.createdAt?.seconds;
-
+      data.sort((a, b) => {
+        return (b.createdAt?.seconds || 0) -
+               (a.createdAt?.seconds || 0);
       });
-
 
       setOrders(data);
       setLoading(false);
-
     }
   );
 
-
   return () => unsubscribe();
 
-
 }, []);
+
+
 
 
 
@@ -176,6 +180,71 @@ const handleLogout = async () => {
     );
 
   };
+
+const toggleAvailability = async (item) => {
+  try {
+    const itemId = item.id;
+
+    await updateDoc(
+      doc(db, "menuItems", itemId),
+      {
+        available: item.available === false
+      }
+    );
+
+    setNotification(
+      item.available === false
+        ? `🟢 ${item.name} is now Available`
+        : `🔴 ${item.name} is now Out of Stock`
+    );
+
+    setTimeout(() => {
+      setNotification("");
+    }, 3000);
+
+  } catch (error) {
+    console.error("Availability update error:", error);
+    alert("Could not update item availability");
+  }
+};
+const setupMenuItems = async () => {
+  try {
+    let count = 0;
+
+    for (const category of menuData) {
+      for (const item of category.items) {
+
+        const itemId = `${category.category}_${item.name}`
+          .replace(/\s+/g, "_")
+          .replace(/[.#$/[\]]/g, "");
+
+        await setDoc(
+          doc(db, "menuItems", itemId),
+          {
+            name: item.name,
+            category: category.category,
+            available: true
+          },
+          { merge: true }
+        );
+
+        count++;
+      }
+    }
+
+    setNotification(
+      `✅ ${count} menu items loaded successfully!`
+    );
+
+    setTimeout(() => {
+      setNotification("");
+    }, 3000);
+
+  } catch (error) {
+    console.error("Menu setup error:", error);
+    alert(`Could not setup menu items: ${error.message}`);
+  }
+};
   // Delete Order
 
 const deleteOrder = async(id)=>{
@@ -323,12 +392,81 @@ return (
     </div>
   )}
 
-  <div className="admin-container">
+<div className="admin-container">
 
+  {/* 🍔 MENU MANAGEMENT */}
 
-      <h1 className="dashboard-title">
-        👨‍🍳 Kitskos Kitchen Dashboard
-      </h1>
+  <div
+    style={{
+      marginBottom: "30px",
+      padding: "20px",
+      background: "#f5f5f5",
+      borderRadius: "12px"
+    }}
+  >
+
+    <h2>🍔 Menu Management</h2>
+    <button
+  className="add-btn"
+  onClick={setupMenuItems}
+  style={{
+    marginBottom: "20px",
+    background: "green"
+  }}
+>
+  ⚙️ Sync Menu Items
+</button>
+
+    {menuItems.length === 0 ? (
+
+      <p>No menu availability settings yet.</p>
+
+    ) : (
+
+      menuItems.map((item) => (
+
+        <div
+          key={item.id}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "12px",
+            marginBottom: "10px",
+            background: "white",
+            borderRadius: "8px"
+          }}
+        >
+
+          <strong>
+            {item.name}
+          </strong>
+
+<button
+  className="add-btn"
+  onClick={() => toggleAvailability(item)}
+  style={{
+    background: item.available === false
+      ? "green"
+      : "red"
+  }}
+>
+  {item.available === false
+    ? "🟢 Mark Available"
+    : "🔴 Mark Out of Stock"}
+</button>
+
+        </div>
+
+      ))
+
+    )}
+
+  </div>
+
+  <h1 className="dashboard-title">
+    👨‍🍳 Kitskos Kitchen Dashboard
+  </h1>
       <button
   onClick={handleLogout}
   style={{

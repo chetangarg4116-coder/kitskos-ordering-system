@@ -1,5 +1,8 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
+
+import app from "../firebase/config";
 import menu from "../data/menuData";
 import MenuItem from "../components/MenuItem";
 import { CartContext } from "../context/CartContext";
@@ -12,10 +15,41 @@ function Menu() {
 
   const { cart } = useContext(CartContext);
 
+  const db = getFirestore(app);
+
+  const [availability, setAvailability] = useState({});
+
   const tableNumber = searchParams.get("table");
 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [search, setSearch] = useState("");
+
+  // 🔄 Listen for menu availability changes
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "menuItems"),
+      (snapshot) => {
+        const data = {};
+
+        snapshot.forEach((doc) => {
+          data[doc.id] = doc.data().available !== false;
+        });
+
+        setAvailability(data);
+      },
+      (error) => {
+        console.error("Menu availability error:", error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  const getItemId = (category, itemName) => {
+    return `${category}_${itemName}`
+      .replace(/\s+/g, "_")
+      .replace(/[.#$/[\]]/g, "");
+  };
 
   const categories = [
     "All",
@@ -30,6 +64,7 @@ function Menu() {
     )
     .map((category) => ({
       ...category,
+
       items: category.items.filter((item) =>
         item.name.toLowerCase().includes(search.toLowerCase())
       ),
@@ -55,6 +90,7 @@ function Menu() {
 
       </div>
 
+
       {/* Search */}
 
       <input
@@ -66,6 +102,7 @@ function Menu() {
 
       <br />
       <br />
+
 
       {/* Cart */}
 
@@ -79,6 +116,7 @@ function Menu() {
       <br />
       <br />
 
+
       {/* Categories */}
 
       <div className="category-buttons">
@@ -88,7 +126,9 @@ function Menu() {
           <button
             key={category}
             className={`add-btn ${
-              selectedCategory === category ? "active-category" : ""
+              selectedCategory === category
+                ? "active-category"
+                : ""
             }`}
             onClick={() => setSelectedCategory(category)}
           >
@@ -99,6 +139,7 @@ function Menu() {
 
       </div>
 
+
       {/* Menu */}
 
       {filteredMenu.map((category) => (
@@ -106,21 +147,31 @@ function Menu() {
         <div key={category.category}>
 
           <h2 className="category-title">
-
             {category.category}
-
           </h2>
 
-          {category.items.map((item) => (
 
-          <MenuItem
-  key={item.name}
-  item={item}
-  category={category.category}
-/>
+{category.items.map((item) => {
 
-          ))}
+const itemId = `${category.category}_${item.name}`
+  .replace(/\s+/g, "_")
+  .replace(/[.#$/[\]]/g, "");
+
+const available = availability[itemId] !== false;
+
+  return (
+    <MenuItem
+      key={item.name}
+      item={item}
+      category={category.category}
+      available={available}
+    />
+  );
+
+})}
+
 <FloatingCart />
+
         </div>
 
       ))}

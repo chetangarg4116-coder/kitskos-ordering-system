@@ -18,7 +18,7 @@ import iceCreamImg from "../assets/images/ice ream.jfif";
 import momosImg from "../assets/images/momos.avif";
 
 
-function MenuItem({ item, category }) {
+function MenuItem({ item, category, available }) {
 
   const { addToCart } = useContext(CartContext);
 
@@ -33,6 +33,7 @@ function MenuItem({ item, category }) {
 
 
   const getImage = () => {
+     if (item.image) return item.image;
     if (
   category === "Pizza Mania" ||
   category === "Double Pizza" ||
@@ -85,6 +86,10 @@ if (
   };
 
   const handleAdd = () => {
+    if (!available) {
+  alert(`${item.name} is currently out of stock`);
+  return;
+}
 
     let basePrice = item.price || 0;
 
@@ -180,12 +185,17 @@ addToCart({
 />
       <br />
 
-      <button
-        className="add-btn"
-        onClick={handleAdd}
-      >
-        Add to Cart
-      </button>
+<button
+  className="add-btn"
+  onClick={handleAdd}
+  disabled={!available}
+  style={{
+    background: available ? "" : "#999",
+    cursor: available ? "pointer" : "not-allowed"
+  }}
+>
+  {available ? "Add to Cart" : "❌ Out of Stock"}
+</button>
 
     </div>
 

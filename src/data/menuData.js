@@ -1,5 +1,9 @@
 import coldCoffeeImg from "../assets/images/cold-coffee.jpg";
-
+import vegSandwichImg from "../assets/images/veg-sandwich.jpg";
+import tastyCornSandwichImg from "../assets/images/tasty-corn-sandwich.jpg";
+import cheeseLoadedSandwichImg from "../assets/images/cheese-loaded-sandwich.jpg";
+import paneerTikkaSandwichImg from "../assets/images/paneer-tikka-sandwich.jpg";
+import waterBottleImg from "../assets/images/water-bottle.jpg";
 const pizzaAddons = [
   {
     name: "Extra Toppings",
@@ -39,28 +43,28 @@ const menuData = [
         name: "Veg Sandwich",
         description: "Grilled sandwich loaded with fresh vegetables and delicious sauces",
         price: 99,
-        image: "",
+        image: vegSandwichImg,
         addons: []
       },
       {
         name: "Tasty Corn Sandwich",
         description: "Grilled sandwich filled with sweet corn and creamy flavours",
         price: 109,
-        image: "",
+        image: tastyCornSandwichImg,
         addons: []
       },
       {
         name: "Cheese Loaded Sandwich",
         description: "Grilled sandwich loaded with extra cheese and rich flavours",
         price: 119,
-        image: "",
+        image: cheeseLoadedSandwichImg,
         addons: []
       },
       {
         name: "Paneer Tikka Sandwich",
         description: "Grilled sandwich with spicy paneer tikka filling",
         price: 129,
-        image: "",
+        image: paneerTikkaSandwichImg,
         addons: []
       },
       {
@@ -352,6 +356,13 @@ const menuData = [
         image: "",
         addons: []
       },
+      {
+  name: "Water Bottle",
+  description: "Chilled drinking water",
+  price: 20,
+  image:  waterBottleImg,
+  addons: []
+},
       {
         name: "Fruit Beer",
         description: "Refreshing fruity beverage served chilled",
