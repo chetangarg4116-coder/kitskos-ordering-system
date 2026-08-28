@@ -53,6 +53,9 @@ import brownieImg from "../assets/images/brownie.jpg";
 import kitKatBrownieImg from "../assets/images/kit-kat-brownie.jpg";
 import vanillaIceCreamImg from "../assets/images/vanilla-ice-cream.jpg";
 import butterscotchIceCreamImg from "../assets/images/butterscotch-ice-cream.jpg";
+import springRollImg from "../assets/images/spring-roll.jpg";
+import kurkureSpringRollImg from "../assets/images/kurkure-spring-roll.jpg";
+import steamMomosImg from "../assets/images/steam-momos.jpg";
 
 const pizzaAddons = [
   {
@@ -737,7 +740,7 @@ const menuData = [
         name: "Spring Roll",
         description: "Crispy spring roll filled with delicious vegetables",
         price: 99,
-        image: "",
+        image: springRollImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
@@ -749,7 +752,7 @@ const menuData = [
         name: "Kurkure Spring Roll",
         description: "Crunchy kurkure style spring roll with spicy flavours",
         price: 139,
-        image: "",
+        image: kurkureSpringRollImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
@@ -761,7 +764,7 @@ const menuData = [
         name: "Steam Momos (8pc)",
         description: "Soft steamed momos with delicious filling",
         price: 79,
-        image: "",
+        image: steamMomosImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
