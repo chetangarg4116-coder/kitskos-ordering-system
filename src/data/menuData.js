@@ -3,7 +3,34 @@ import vegSandwichImg from "../assets/images/veg-sandwich.jpg";
 import tastyCornSandwichImg from "../assets/images/tasty-corn-sandwich.jpg";
 import cheeseLoadedSandwichImg from "../assets/images/cheese-loaded-sandwich.jpg";
 import paneerTikkaSandwichImg from "../assets/images/paneer-tikka-sandwich.jpg";
+import tandooriPaneerSandwichImg from "../assets/images/tandoori-paneer-sandwich.jpg";
+import paneerMaggiImg from "../assets/images/paneer-maggi.jpg";
+import cheesyMaggiImg from "../assets/images/cheesy-maggi.jpg";
+import makhaniMaggiImg from "../assets/images/makhani-maggi.jpg";
+import kitskosSpecialMaggiImg from "../assets/images/kitskos-special-maggi.jpg";
+import vegWrapImg from "../assets/images/veg-wrap.jpg";
+import crispyWrapImg from "../assets/images/crispy-wrap.jpg";
+import spicyWrapImg from "../assets/images/spicy-wrap.jpg";
+import paneerWrapImg from "../assets/images/paneer-wrap.jpg";
+import makhaniWrapImg from "../assets/images/makhani-wrap.jpg";
+import whiteCheesePastaImg from "../assets/images/white-cheese-pasta.jpg";
+import redSaucePastaImg from "../assets/images/red-sauce-pasta.jpg";
+import mixSaucePastaImg from "../assets/images/mix-sauce-pasta.jpg";
+import tandooriPastaImg from "../assets/images/tandoori-pasta.jpg";
+import makhaniPastaImg from "../assets/images/makhani-pasta.jpg";
+import vegDelightBurgerImg from "../assets/images/veg-delight-burger.jpg";
+import spicyBurgerImg from "../assets/images/spicy-burger.jpg";
+import crazyBurgerImg from "../assets/images/crazy-burger.jpg";
+import cheeseBurgerImg from "../assets/images/cheese-burger.jpg";
+import kitskosBurgerImg from "../assets/images/kitskos-burger.jpg";
+import saltedFriesImg from "../assets/images/salted-fries.jpg";
+import periPeriFriesImg from "../assets/images/peri-peri-fries.jpg";
+import cheeseMasalaFriesImg from "../assets/images/cheese-masala-fries.jpg";
+import cokeGlassImg from "../assets/images/coke-glass.jpg";
+import mixFruitJuiceImg from "../assets/images/mix-fruit-juice.jpg";
+import hotCoffeeImg from "../assets/images/hot-coffee.jpg";
 import waterBottleImg from "../assets/images/water-bottle.jpg";
+
 const pizzaAddons = [
   {
     name: "Extra Toppings",
@@ -71,7 +98,7 @@ const menuData = [
         name: "Tandoori Paneer Sandwich",
         description: "Grilled sandwich with smoky tandoori paneer stuffing",
         price: 139,
-        image: "",
+        image: tandooriPaneerSandwichImg,
         addons: []
       }
     ]
@@ -91,28 +118,28 @@ const menuData = [
         name: "Paneer Maggi",
         description: "Maggi loaded with soft paneer and tasty spices",
         price: 99,
-        image: "",
+        image: paneerMaggiImg,
         addons: []
       },
       {
         name: "Cheesy Maggi",
         description: "Creamy Maggi loaded with melted cheese",
         price: 109,
-        image: "",
+        image: cheesyMaggiImg,
         addons: []
       },
       {
         name: "Makhani Maggi",
         description: "Rich and creamy makhani style Maggi",
         price: 119,
-        image: "",
+        image: makhaniMaggiImg,
         addons: []
       },
       {
         name: "Kitskos Spl. Maggi",
         description: "Special Kitskos style Maggi with unique flavours",
         price: 149,
-        image: "",
+        image: kitskosSpecialMaggiImg,
         addons: []
       }
     ]
@@ -123,35 +150,35 @@ const menuData = [
         name: "Veg Wrap",
         description: "Soft wrap filled with fresh vegetables and delicious sauces",
         price: 79,
-        image: "",
+        image: vegWrapImg,
         addons: []
       },
       {
         name: "Crispy Wrap",
         description: "Crunchy crispy filling wrapped with tasty sauces",
         price: 89,
-        image: "",
+        image: crispyWrapImg,
         addons: []
       },
       {
         name: "Spicy Wrap",
         description: "Spicy and flavourful wrap with special sauces",
         price: 99,
-        image: "",
+        image: spicyWrapImg,
         addons: []
       },
       {
         name: "Paneer Wrap",
         description: "Wrap loaded with delicious paneer filling and spices",
         price: 129,
-        image: "",
+        image: paneerWrapImg,
         addons: []
       },
       {
         name: "Makhani Wrap",
         description: "Creamy makhani style wrap with rich flavours",
         price: 139,
-        image: "",
+        image: makhaniWrapImg,
         addons: []
       }
     ]
@@ -164,35 +191,35 @@ const menuData = [
         name: "White Cheese Pasta",
         description: "Creamy white sauce pasta loaded with rich cheese flavour",
         price: 119,
-        image: "",
+        image: whiteCheesePastaImg,
         addons: []
       },
       {
         name: "Red Sauce Pasta",
         description: "Classic pasta cooked in tangy tomato red sauce",
         price: 129,
-        image: "",
+        image: redSaucePastaImg,
         addons: []
       },
       {
         name: "Mix Sauce Pasta",
         description: "Delicious combination of white and red sauce pasta",
         price: 139,
-        image: "",
+        image: mixSaucePastaImg,
         addons: []
       },
       {
         name: "Tandoori Pasta",
         description: "Fusion pasta with smoky tandoori flavours",
         price: 149,
-        image: "",
+        image: tandooriPastaImg,
         addons: []
       },
       {
         name: "Makhani Pasta",
         description: "Rich creamy makhani style pasta",
         price: 159,
-        image: "",
+        image: makhaniPastaImg,
         addons: []
       }
     ]
@@ -205,7 +232,7 @@ const menuData = [
         name: "Veg Delight Burger",
         description: "Classic veg burger with patty, onion and special sauce",
         price: 59,
-        image: "",
+        image: vegDelightBurgerImg,
         addons: [
           {
             name: "Extra Cheese",
@@ -217,7 +244,7 @@ const menuData = [
         name: "Spicy Burger",
         description: "Spicy burger with flavourful patty and sauces",
         price: 69,
-        image: "",
+        image: spicyBurgerImg,
         addons: [
           {
             name: "Extra Cheese",
@@ -229,7 +256,7 @@ const menuData = [
         name: "Crazy Burger",
         description: "Loaded burger with tasty fillings",
         price: 79,
-        image: "",
+        image: crazyBurgerImg,
         addons: [
           {
             name: "Extra Cheese",
@@ -241,7 +268,7 @@ const menuData = [
         name: "Cheese Burger",
         description: "Burger loaded with cheese and special sauce",
         price: 89,
-        image: "",
+        image: cheeseBurgerImg,
         addons: [
           {
             name: "Extra Cheese",
@@ -253,7 +280,7 @@ const menuData = [
         name: "Paneer Burger",
         description: "Burger with spicy paneer patty and flavours",
         price: 99,
-        image: "",
+        image: paneerBurgerImg,
         addons: [
           {
             name: "Extra Cheese",
@@ -265,7 +292,7 @@ const menuData = [
         name: "Kitskos Burger",
         description: "Special Kitskos burger with unique flavours",
         price: 119,
-        image: "",
+        image: kitskosBurgerImg,
         addons: [
           {
             name: "Extra Cheese",
@@ -280,7 +307,7 @@ const menuData = [
       {
         name: "Salted Fries",
         description: "Crispy golden french fries seasoned with classic salt",
-        image: "",
+        image: saltedFriesImg,
         variants: [
           {
             name: "Half",
@@ -295,7 +322,7 @@ const menuData = [
       {
         name: "Peri Peri Fries",
         description: "Crispy fries tossed with spicy peri peri seasoning",
-        image: "",
+        image: periPeriFriesImg,
         variants: [
           {
             name: "Half",
@@ -310,7 +337,7 @@ const menuData = [
       {
         name: "Cheese Masala Fries",
         description: "Loaded fries with cheese and special masala flavour",
-        image: "",
+        image: cheeseMasalaFriesImg,
         variants: [
           {
             name: "Half",
@@ -332,21 +359,21 @@ const menuData = [
         name: "Coke Glass",
         description: "Refreshing chilled coke served in a glass",
         price: 39,
-        image: "",
+        image: cokeGlassImg,
         addons: []
       },
       {
         name: "Mix Fruit Juice",
         description: "Fresh mixed fruit juice with natural flavours",
         price: 49,
-        image: "",
+        image: mixFruitJuiceImg,
         addons: []
       },
       {
         name: "Hot Coffee",
         description: "Hot coffee with rich and refreshing taste",
         price: 59,
-        image: "",
+        image: hotCoffeeImg,
         addons: []
       },
       {
