@@ -280,7 +280,7 @@ const menuData = [
         name: "Paneer Burger",
         description: "Burger with spicy paneer patty and flavours",
         price: 99,
-        image: paneerBurgerImg,
+        image:  "",
         addons: [
           {
             name: "Extra Cheese",
