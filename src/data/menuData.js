@@ -21,6 +21,7 @@ import makhaniPastaImg from "../assets/images/makhani-pasta.jpg";
 import vegDelightBurgerImg from "../assets/images/veg-delight-burger.jpg";
 import spicyBurgerImg from "../assets/images/spicy-burger.jpg";
 import crazyBurgerImg from "../assets/images/crazy-burger.jpg";
+import paneerBurgerImg from "../assets/images/paneer-burger.jpg";
 import cheeseBurgerImg from "../assets/images/cheese-burger.jpg";
 import kitskosBurgerImg from "../assets/images/kitskos-burger.jpg";
 import saltedFriesImg from "../assets/images/salted-fries.jpg";
@@ -30,6 +31,28 @@ import cokeGlassImg from "../assets/images/coke-glass.jpg";
 import mixFruitJuiceImg from "../assets/images/mix-fruit-juice.jpg";
 import hotCoffeeImg from "../assets/images/hot-coffee.jpg";
 import waterBottleImg from "../assets/images/water-bottle.jpg";
+import teaImg from "../assets/images/tea.jpg";
+import fruitBeerImg from "../assets/images/fruit-beer.jpg";
+import greenAppleMojitoImg from "../assets/images/green-apple-mojito.jpg";
+import masalaMojitoImg from "../assets/images/masala-mojito.jpg";
+import watermelonMojitoImg from "../assets/images/watermelon-mojito.jpg";
+import blueCuracaoMojitoImg from "../assets/images/blue-curacao-mojito.jpg";
+import strawberryMojitoImg from "../assets/images/strawberry-mojito.jpg";
+import vanillaShakeImg from "../assets/images/vanilla-shake.jpg";
+import strawberryShakeImg from "../assets/images/strawberry-shake.jpg";
+import butterscotchShakeImg from "../assets/images/butterscotch-shake.jpg";
+import oreoShakeImg from "../assets/images/oreo-shake.jpg";
+import chocolateShakeImg from "../assets/images/chocolate-shake.jpg";
+import kitKatShakeImg from "../assets/images/kit-kat-shake.jpg";
+import blackCurrantShakeImg from "../assets/images/black-currant-shake.jpg"; 
+import kiwiShakeImg from "../assets/images/kiwi-shake.jpg";
+import caramelShakeImg from "../assets/images/caramel-shake.jpg";
+import brownieShakeImg from "../assets/images/brownie-shake.jpg";
+import chocoLavaImg from "../assets/images/choco-lava.jpg";
+import brownieImg from "../assets/images/brownie.jpg";
+import kitKatBrownieImg from "../assets/images/kit-kat-brownie.jpg";
+import vanillaIceCreamImg from "../assets/images/vanilla-ice-cream.jpg";
+import butterscotchIceCreamImg from "../assets/images/butterscotch-ice-cream.jpg";
 
 const pizzaAddons = [
   {
@@ -280,7 +303,7 @@ const menuData = [
         name: "Paneer Burger",
         description: "Burger with spicy paneer patty and flavours",
         price: 99,
-        image:  "",
+        image:  paneerBurgerImg,
         addons: [
           {
             name: "Extra Cheese",
@@ -380,7 +403,7 @@ const menuData = [
         name: "Tea",
         description: "Freshly prepared hot tea",
         price: 39,
-        image: "",
+        image: teaImg,
         addons: []
       },
       {
@@ -394,7 +417,7 @@ const menuData = [
         name: "Fruit Beer",
         description: "Refreshing fruity beverage served chilled",
         price: 69,
-        image: "",
+        image: fruitBeerImg,
         addons: []
       }
     ]
@@ -414,35 +437,35 @@ const menuData = [
         name: "Green Apple Mojito",
         description: "Refreshing mojito with green apple flavour",
         price: 89,
-        image: "",
+        image: greenAppleMojitoImg,
         addons: []
       },
       {
         name: "Masala Mojito",
         description: "Spicy twist on classic mojito with masala flavours",
         price: 99,
-        image: "",
+        image: masalaMojitoImg,
         addons: []
       },
       {
         name: "Watermelon Mojito",
         description: "Cool mojito with juicy watermelon flavour",
         price: 99,
-        image: "",
+        image: watermelonMojitoImg,
         addons: []
       },
       {
         name: "Blue Curacao Mojito",
         description: "Premium mojito with blue curacao flavour",
         price: 109,
-        image: "",
+        image: blueCuracaoMojitoImg,
         addons: []
       },
       {
         name: "Strawberry Mojito",
         description: "Refreshing mojito with sweet strawberry flavour",
         price: 109,
-        image: "",
+        image: strawberryMojitoImg,
         addons: []
       }
     ]
@@ -469,7 +492,7 @@ const menuData = [
         name: "Vanilla Shake",
         description: "Classic creamy vanilla flavoured shake",
         price: 79,
-        image: "",
+        image: vanillaShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -485,7 +508,7 @@ const menuData = [
         name: "Strawberry Shake",
         description: "Refreshing strawberry flavoured shake",
         price: 99,
-        image: "",
+        image: strawberryShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -501,7 +524,7 @@ const menuData = [
         name: "Butterscotch Shake",
         description: "Creamy butterscotch flavoured shake",
         price: 109,
-        image: "",
+        image: butterscotchShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -517,7 +540,7 @@ const menuData = [
         name: "OREO Shake",
         description: "Shake blended with crunchy Oreo cookies",
         price: 109,
-        image: "",
+        image: oreoShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -533,7 +556,7 @@ const menuData = [
         name: "Chocolate Shake",
         description: "Rich chocolate flavoured creamy shake",
         price: 109,
-        image: "",
+        image: chocolateShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -549,7 +572,7 @@ const menuData = [
         name: "Kitkat Shake",
         description: "Chocolate shake blended with Kitkat pieces",
         price: 119,
-        image: "",
+        image:kitKatShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -565,7 +588,7 @@ const menuData = [
         name: "Black Currant Shake",
         description: "Creamy shake with black currant flavour",
         price: 119,
-        image: "",
+        image: blackCurrantShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -581,7 +604,7 @@ const menuData = [
         name: "Kiwi Shake",
         description: "Refreshing kiwi flavoured shake",
         price: 119,
-        image: "",
+        image: kiwiShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -597,7 +620,7 @@ const menuData = [
         name: "Caramel Shake",
         description: "Rich creamy caramel flavoured shake",
         price: 129,
-        image: "",
+        image: caramelShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -613,7 +636,7 @@ const menuData = [
         name: "Brownie Shake",
         description: "Premium shake with brownie pieces",
         price: 159,
-        image: "",
+        image: brownieShakeImg,
         addons: [
           {
             name: "Extra Ice Cream in Shake",
@@ -635,7 +658,7 @@ const menuData = [
         name: "Chocolawa",
         description: "Warm chocolate dessert with rich chocolate centre",
         price: 79,
-        image: "",
+        image: chocoLavaImg,
         addons: [
           {
             name: "Extra Ice Cream in Dessert",
@@ -647,7 +670,7 @@ const menuData = [
         name: "Brownie",
         description: "Soft and delicious chocolate brownie",
         price: 99,
-        image: "",
+        image: brownieImg,
         addons: [
           {
             name: "Extra Ice Cream in Dessert",
@@ -671,7 +694,7 @@ const menuData = [
         name: "Kitkat Brownie",
         description: "Chocolate brownie with Kitkat flavour",
         price: 119,
-        image: "",
+        image: kitKatBrownieImg,
         addons: [
           {
             name: "Extra Ice Cream in Dessert",
@@ -689,14 +712,14 @@ const menuData = [
         name: "Vanilla",
         description: "Classic creamy vanilla ice cream",
         price: 59,
-        image: "",
+        image: vanillaIceCreamImg,
         addons: []
       },
       {
         name: "Butterscotch",
         description: "Rich butterscotch ice cream",
         price: 69,
-        image: "",
+        image: butterscotchIceCreamImg,
         addons: []
       },
       {
