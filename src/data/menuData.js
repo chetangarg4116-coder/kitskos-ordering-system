@@ -56,7 +56,9 @@ import butterscotchIceCreamImg from "../assets/images/butterscotch-ice-cream.jpg
 import springRollImg from "../assets/images/spring-roll.jpg";
 import kurkureSpringRollImg from "../assets/images/kurkure-spring-roll.jpg";
 import steamMomosImg from "../assets/images/steam-momos.jpg";
-
+import tandooriMomosImg from "../assets/images/tandoori-momos.jpg";
+import friedMomosImg from "../assets/images/fried-momos.jpg";
+import kurkureMomosImg from "../assets/images/kurkure-momos.jpg";
 const pizzaAddons = [
   {
     name: "Extra Toppings",
@@ -776,7 +778,7 @@ const menuData = [
         name: "Tandoori Momos",
         description: "Smoky tandoori style momos with spices",
         price: 149,
-        image: "",
+        image: tandooriMomosImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
@@ -788,7 +790,7 @@ const menuData = [
         name: "Makhani Momos",
         description: "Creamy makhani style momos",
         price: 199,
-        image: "",
+        image: tandooriMomosImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
@@ -800,7 +802,7 @@ const menuData = [
         name: "Fried Momos (8pc)",
         description: "Crispy fried momos with tasty filling",
         price: 109,
-        image: "",
+        image: friedMomosImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
@@ -812,7 +814,7 @@ const menuData = [
         name: "Kurkure Momos (8pc)",
         description: "Crunchy kurkure coated momos",
         price: 129,
-        image: "",
+        image: kurkureMomosImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
@@ -824,7 +826,7 @@ const menuData = [
         name: "Paneer Steam Momos",
         description: "Steamed momos with paneer stuffing",
         price: 100,
-        image: "",
+        image: steamMomosImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
@@ -836,7 +838,7 @@ const menuData = [
         name: "Paneer Fried Momos",
         description: "Fried momos with delicious paneer filling",
         price: 130,
-        image: "",
+        image: friedMomosImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
@@ -848,7 +850,7 @@ const menuData = [
         name: "Paneer Kurkure Momos",
         description: "Kurkure coated momos with paneer filling",
         price: 150,
-        image: "",
+        image: kurkureMomosImg,
         addons: [
           {
             name: "Extra Dip (Per Serving)",
