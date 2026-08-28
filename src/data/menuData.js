@@ -59,6 +59,7 @@ import steamMomosImg from "../assets/images/steam-momos.jpg";
 import tandooriMomosImg from "../assets/images/tandoori-momos.jpg";
 import friedMomosImg from "../assets/images/fried-momos.jpg";
 import kurkureMomosImg from "../assets/images/kurkure-momos.jpg";
+import pizzaImg from "../assets/images/pizza.jpg";
 const pizzaAddons = [
   {
     name: "Extra Toppings",
@@ -867,19 +868,19 @@ const menuData = [
     {
       name: "Onion Pizza",
       description: "Fresh onion loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       price: 79
     },
     {
       name: "Capsicum Pizza",
       description: "Fresh capsicum loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       price: 79
     },
     {
       name: "Sweet Corn Pizza",
       description: "Golden corn loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       price: 79
     }
   ]
@@ -891,19 +892,19 @@ const menuData = [
     {
       name: "Onion + Capsicum Pizza",
       description: "Onion and capsicum loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       price: 109
     },
     {
       name: "Onion + Paneer Pizza",
       description: "Onion and paneer loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       price: 109
     },
     {
       name: "Onion + Sweet Corn Pizza",
       description: "Onion and sweet corn loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       price: 109
     }
   ]
@@ -915,7 +916,7 @@ const menuData = [
     {
       name: "Margherita Pizza",
       description: "Loaded with double cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 149 },
         { name: "Medium", price: 249 }
@@ -926,7 +927,7 @@ const menuData = [
     {
       name: "Cheese Corn Pizza",
       description: "Golden corn loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 149 },
         { name: "Medium", price: 249 }
@@ -937,7 +938,7 @@ const menuData = [
     {
       name: "Cheese Onion Pizza",
       description: "Onion loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 149 },
         { name: "Medium", price: 249 }
@@ -948,7 +949,7 @@ const menuData = [
     {
       name: "Cheese Capsicum Pizza",
       description: "Capsicum loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 149 },
         { name: "Medium", price: 249 }
@@ -959,7 +960,7 @@ const menuData = [
     {
       name: "Paneer Pizza",
       description: "Paneer loaded with mozzarella cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 149 },
         { name: "Medium", price: 249 }
@@ -975,7 +976,7 @@ const menuData = [
     {
       name: "Mexican Lover",
       description: "Onion, Capsicum, Paneer",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 169 },
         { name: "Medium", price: 299 }
@@ -986,7 +987,7 @@ const menuData = [
     {
       name: "Indian Choice",
       description: "Onion, Capsicum, Paneer",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 169 },
         { name: "Medium", price: 299 }
@@ -997,7 +998,7 @@ const menuData = [
     {
       name: "Tandoori Paneer Pizza",
       description: "Onion, Capsicum, Paneer, Red Paprika",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 169 },
         { name: "Medium", price: 299 }
@@ -1008,7 +1009,7 @@ const menuData = [
     {
       name: "Farm House Pizza",
       description: "Onion, Capsicum",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 169 },
         { name: "Medium", price: 299 }
@@ -1024,7 +1025,7 @@ const menuData = [
     {
       name: "Kitskos Special",
       description: "Onion, Red Paprika, Paneer, Tomato",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 219 },
         { name: "Medium", price: 379 }
@@ -1035,7 +1036,7 @@ const menuData = [
     {
       name: "Paneer Lover",
       description: "Capsicum, Paneer, Peri Peri, Black Olives, Loaded Cheese",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 219 },
         { name: "Medium", price: 379 }
@@ -1046,7 +1047,7 @@ const menuData = [
     {
       name: "Loaded Cheese",
       description: "Onion and mozzarella cheese loaded pizza",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 219 },
         { name: "Medium", price: 379 }
@@ -1057,7 +1058,7 @@ const menuData = [
     {
       name: "Indo Western",
       description: "Onion, Tomato, Black Olive, Sweet Corn, Mushroom, Harissa Sauce",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 219 },
         { name: "Medium", price: 379 }
@@ -1275,7 +1276,7 @@ const menuData = [
     {
       name: "Build Your Own Pizza",
       description: "Choose up to 5 toppings",
-      image: "/images/pizza.jpg",
+      image: pizzaImg,
       variants: [
         { name: "Small", price: 219 },
         { name: "Medium", price: 379 }
