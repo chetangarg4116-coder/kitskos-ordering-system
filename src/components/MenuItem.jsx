@@ -137,6 +137,9 @@ addToCart({
   addons: selection.addons || [],
   comboChoices: selection.comboChoices || {},
 
+  // Save special instruction
+  instruction: selection.instruction || "",
+
   // Save complete selection object for future use
   selection
 });

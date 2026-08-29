@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { getFirestore, collection, onSnapshot } from "firebase/firestore";
-
+import kitskosLogo from "../assets/images/kitskos-logo.png";
 import app from "../firebase/config";
 import menu from "../data/menuData";
 import MenuItem from "../components/MenuItem";
@@ -157,16 +157,18 @@ const itemId = `${category.category}_${item.name}`
   .replace(/\s+/g, "_")
   .replace(/[.#$/[\]]/g, "");
 
+
+
 const available = availability[itemId] !== false;
 
-  return (
-    <MenuItem
-      key={item.name}
-      item={item}
-      category={category.category}
-      available={available}
-    />
-  );
+return (
+  <MenuItem
+    key={item.name}
+    item={item}
+    category={category.category}
+    available={available}
+  />
+);
 
 })}
 
