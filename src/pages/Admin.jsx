@@ -53,35 +53,7 @@ useEffect(() => {
   return () => unsubscribe();
 }, [navigate]);
 
-useEffect(() => {
 
-  const unlockAudio = () => {
-
-    if(notificationSound.current){
-
-      notificationSound.current.play()
-      .then(()=>{
-
-        notificationSound.current.pause();
-        notificationSound.current.currentTime = 0;
-
-      })
-      .catch(()=>{});
-
-    }
-
-  };
-
-
-  window.addEventListener("click", unlockAudio, { once:true });
-
-
-  return () => {
-    window.removeEventListener("click", unlockAudio);
-  };
-
-
-}, []);
 // 🍔 Load menu availability
 useEffect(() => {
 
