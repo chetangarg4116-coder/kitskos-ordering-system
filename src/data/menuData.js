@@ -258,7 +258,7 @@ const menuData = [
     category: "Burger",
     items: [
       {
-        name: "Veg Delight Burger",
+         name: "Veg Delight Burger (Recommended for Children)",
         description: "Classic veg burger with patty, onion and special sauce",
         price: 59,
         image: vegDelightBurgerImg,
