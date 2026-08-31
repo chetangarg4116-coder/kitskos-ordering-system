@@ -16,6 +16,10 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import "../styles/admin.css";
 import menuData from "../data/menuData";
+import {
+  requestNotificationPermission,
+  listenForMessages
+} from "../firebase/messaging";
 
 
 function Admin() {
@@ -52,6 +56,10 @@ useEffect(() => {
 
   return () => unsubscribe();
 }, [navigate]);
+
+useEffect(() => {
+  requestNotificationPermission();
+}, []);
 
 
 // 🍔 Load menu availability
